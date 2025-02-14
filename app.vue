@@ -10,13 +10,9 @@
       >
         Template Preview
       </strong>
-      <div
-        class="min-h-[770px] m-4 rounded-xl bg-zinc-950 p-4"
-        id="screen"
-        :settings="headlineSettings"
-        @updateSettings="updateHeadlineSettings"
-      >
-        <p :style="headlineStyle">{{ headlineText }}</p>
+      <div class="min-h-[770px] m-4 rounded-xl bg-zinc-950" id="screen">
+        <p :style="headlineStyle">{{ headlineSettings.text }}</p>
+        <p :style="subheadlineStyle">{{ subheadlineSettings.text }}</p>
       </div>
     </div>
 
@@ -39,7 +35,7 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left"
+            class="icon icon-tabler icons-tabler-arrow-left"
           >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M5 12l14 0" />
@@ -48,55 +44,30 @@
           </svg>
           Back
         </button>
+
         <div v-if="!activeComponent">
           <h2 class="text-lg font-bold my-2 text-gray-200">Template</h2>
           <p
-            class="flex overflow-hidden mt-10 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold"
-            @click="toggleSettings('Background')"
-          >
-            Background
-          </p>
-          <p
+            v-for="comp in activeComponents"
+            :key="comp"
             class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold"
-            @click="toggleSettings('Headline')"
+            @click="toggleSettings(comp)"
           >
-            Headline
-          </p>
-          <p
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold"
-            @click="toggleSettings('Subheadline')"
-          >
-            Sub Headline
-          </p>
-          <p
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold"
-            @click="toggleSettings('Timertext')"
-          >
-            Timer Text
-          </p>
-          <p
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold"
-            @click="toggleSettings('Prewebinar')"
-          >
-            Pre-Webinar Media
-          </p>
-          <p
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold"
-            @click="toggleSettings('Countdown')"
-          >
-            Countdown Timer
+            {{ comp }}
           </p>
         </div>
 
-        <div v-if="activeComponent">
+        <div>
           <component
+            v-if="activeComponents.includes(activeComponent)"
             :is="dynamicComponent"
-            :settings="headlineSettings"
+            :settings="getSettings(activeComponent)"
             :key="activeComponent"
-            @updateHeadlineText="updateHeadlineText"
-            :style="localSettings"
+            @update="updateSettings(activeComponent, $event)"
+            @updateText="updateText(activeComponent, $event)"
           />
         </div>
+
         <button
           v-if="!activeComponent"
           class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-600 justify-center rounded-xl p-4 font-bold w-full"
@@ -109,7 +80,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import Background from "@/components/background.vue";
 import Headline from "@/components/headline.vue";
 import Subheadline from "@/components/subheadline.vue";
@@ -117,21 +88,51 @@ import Timertext from "@/components/timertext.vue";
 import Prewebinar from "@/components/prewebinar.vue";
 import Countdown from "@/components/countdown.vue";
 
+const activeComponents = [
+  "Background",
+  "Headline",
+  "Subheadline",
+  "Timertext",
+  "Prewebinar",
+  "Countdown",
+];
+
 const activeComponent = ref(null);
 const dynamicComponent = ref(null);
 
-const headlineText = ref("This is your Opening Room Headline");
-
-const headlineSettings = ref({
-  text: headlineText.value,
-  fontFamily: "Arial",
-  fontWeight: "Normal",
-  fontSize: 34,
-  fontColor: "#FFFFFF",
-  bgColor: "#000000",
-  alignment: "center",
-  padding: { top: 10, right: 10, bottom: 10, left: 10 },
+const componentSettings = ref({
+  Headline: {
+    text: "This is your Headline",
+    alignment: "center",
+    fontFamily: "Arial",
+    fontWeight: "Bold",
+    fontSize: 24,
+    fontColor: "#000000",
+    bgColor: "transparent",
+    padding: { top: 10, right: 10, bottom: 10, left: 10 },
+  },
+  Subheadline: {
+    text: "This is your subheadline",
+    alignment: "left",
+    fontFamily: "Cambria",
+    fontWeight: "Normal",
+    fontSize: 18,
+    fontColor: "#333333",
+    bgColor: "transparent",
+    padding: { top: 5, right: 5, bottom: 5, left: 5 },
+  },
+  Timertext: { text: "Timer running...", fontSize: 20, fontColor: "#FF0000" },
+  Prewebinar: {
+    text: "Webinar starting soon!",
+    fontSize: 22,
+    fontColor: "#008000",
+  },
+  Countdown: { time: 60, fontSize: 30, fontColor: "#FF4500" },
+  Background: { bgColor: "#F0F0F0", image: "default-bg.jpg" },
 });
+
+const headlineSettings = computed(() => componentSettings.value.Headline);
+const subheadlineSettings = computed(() => componentSettings.value.Subheadline);
 
 const headlineStyle = computed(() => ({
   fontFamily: headlineSettings.value.fontFamily,
@@ -143,35 +144,48 @@ const headlineStyle = computed(() => ({
   padding: `${headlineSettings.value.padding.top}px ${headlineSettings.value.padding.right}px ${headlineSettings.value.padding.bottom}px ${headlineSettings.value.padding.left}px`,
 }));
 
-const updateHeadlineSettings = (newSettings) => {
-  headlineSettings.value = { ...headlineSettings.value, ...newSettings };
+const subheadlineStyle = computed(() => ({
+  fontFamily: subheadlineSettings.value.fontFamily,
+  fontWeight: subheadlineSettings.value.fontWeight,
+  fontSize: `${subheadlineSettings.value.fontSize}px`,
+  color: subheadlineSettings.value.fontColor,
+  backgroundColor: subheadlineSettings.value.bgColor,
+  textAlign: subheadlineSettings.value.alignment,
+  padding: `${subheadlineSettings.value.padding.top}px ${subheadlineSettings.value.padding.right}px ${subheadlineSettings.value.padding.bottom}px ${subheadlineSettings.value.padding.left}px`,
+}));
+
+const getComponent = (name) => {
+  const components = {
+    Headline,
+    Subheadline,
+    Timertext,
+    Prewebinar,
+    Countdown,
+    Background,
+  };
+  return components[name] || null;
 };
 
-const updateHeadlineText = (newText) => {
-  headlineText.value = newText;
+const getSettings = (name) => componentSettings.value[name] || {};
+
+const updateSettings = (name, newSettings) => {
+  componentSettings.value[name] = {
+    ...componentSettings.value[name],
+    ...newSettings,
+  };
+};
+
+const updateText = (name, newText) => {
+  if (componentSettings.value[name]) {
+    componentSettings.value[name].text = newText;
+  }
 };
 
 const toggleSettings = (component) => {
-  if (component === "Background") {
-    activeComponent.value = component;
-    dynamicComponent.value = Background;
-  } else if (component === "Headline") {
-    activeComponent.value = component;
-    dynamicComponent.value = Headline;
-  } else if (component === "Subheadline") {
-    activeComponent.value = component;
-    dynamicComponent.value = Subheadline;
-  } else if (component === "Timertext") {
-    activeComponent.value = component;
-    dynamicComponent.value = Timertext;
-  } else if (component === "Prewebinar") {
-    activeComponent.value = component;
-    dynamicComponent.value = Prewebinar;
-  } else if (component === "Countdown") {
-    activeComponent.value = component;
-    dynamicComponent.value = Countdown;
-  }
+  activeComponent.value = component;
+  dynamicComponent.value = getComponent(component);
 };
+
 const backToSidebar = () => {
   activeComponent.value = null;
   dynamicComponent.value = null;
