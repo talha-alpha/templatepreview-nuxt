@@ -94,6 +94,7 @@
             :settings="headlineSettings"
             :key="activeComponent"
             @updateHeadlineText="updateHeadlineText"
+            :style="localSettings"
           />
         </div>
         <button

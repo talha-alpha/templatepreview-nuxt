@@ -169,6 +169,9 @@ const props = defineProps({
   },
 });
 
+
+
+
 const localSettings = ref({ ...props.settings });
 const localHeadlineText = ref(props.settings.text || "This is your Opening Room Headline");
 
@@ -210,7 +213,6 @@ watch(
   },
   { deep: true }
 );
-
 
 
 const alignmentOptions = [
