@@ -10,8 +10,13 @@
       >
         Template Preview
       </strong>
-      <div class="min-h-[770px] m-4 rounded-xl bg-zinc-950" id="screen">
-        <div>{{ headlineText }}</div>
+      <div
+        class="min-h-[770px] m-4 rounded-xl bg-zinc-950 p-4"
+        id="screen"
+        :settings="headlineSettings"
+        @updateSettings="updateHeadlineSettings"
+      >
+        <p :style="headlineStyle">{{ headlineText }}</p>
       </div>
     </div>
 
@@ -43,7 +48,6 @@
           </svg>
           Back
         </button>
-
         <div v-if="!activeComponent">
           <h2 class="text-lg font-bold my-2 text-gray-200">Template</h2>
           <p
@@ -87,12 +91,11 @@
         <div v-if="activeComponent">
           <component
             :is="dynamicComponent"
-            :settings="componentSettings"
+            :settings="headlineSettings"
             :key="activeComponent"
-            class=""
+            @updateHeadlineText="updateHeadlineText"
           />
         </div>
-
         <button
           v-if="!activeComponent"
           class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-600 justify-center rounded-xl p-4 font-bold w-full"
@@ -105,7 +108,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import Background from "@/components/background.vue";
 import Headline from "@/components/headline.vue";
 import Subheadline from "@/components/subheadline.vue";
@@ -115,52 +118,61 @@ import Countdown from "@/components/countdown.vue";
 
 const activeComponent = ref(null);
 const dynamicComponent = ref(null);
-const componentSettings = ref({});
-const toggleSettings = (component) => {
-  activeComponent.value = component;
-  componentSettings.value = {};
 
-  if (component === "Background") {
-    dynamicComponent.value = Background;
-  } else if (component === "Headline") {
-    dynamicComponent.value = Headline;
-  } else if (component === "Subheadline") {
-    dynamicComponent.value = Subheadline;
-  } else if (component === "Timertext") {
-    dynamicComponent.value = Timertext;
-  } else if (component === "Prewebinar") {
-    dynamicComponent.value = Prewebinar;
-  } else if (component === "Countdown") {
-    dynamicComponent.value = Countdown;
-  }
-};
-
-const backToSidebar = () => {
-  activeComponent.value = null;
-  dynamicComponent.value = null;
-};
+const headlineText = ref("This is your Opening Room Headline");
 
 const headlineSettings = ref({
-  text: "",
+  text: headlineText.value,
   fontFamily: "Arial",
   fontWeight: "Normal",
-  fontSize: 42,
+  fontSize: 34,
   fontColor: "#FFFFFF",
   bgColor: "#000000",
-  alignment: "left",
+  alignment: "center",
   padding: { top: 10, right: 10, bottom: 10, left: 10 },
 });
 
-const headlineText = ref(headlineSettings.value.text);
+const headlineStyle = computed(() => ({
+  fontFamily: headlineSettings.value.fontFamily,
+  fontWeight: headlineSettings.value.fontWeight,
+  fontSize: `${headlineSettings.value.fontSize}px`,
+  color: headlineSettings.value.fontColor,
+  backgroundColor: headlineSettings.value.bgColor,
+  textAlign: headlineSettings.value.alignment,
+  padding: `${headlineSettings.value.padding.top}px ${headlineSettings.value.padding.right}px ${headlineSettings.value.padding.bottom}px ${headlineSettings.value.padding.left}px`,
+}));
+
+const updateHeadlineSettings = (newSettings) => {
+  headlineSettings.value = { ...headlineSettings.value, ...newSettings };
+};
 
 const updateHeadlineText = (newText) => {
   headlineText.value = newText;
 };
+
+const toggleSettings = (component) => {
+  if (component === "Background") {
+    activeComponent.value = component;
+    dynamicComponent.value = Background;
+  } else if (component === "Headline") {
+    activeComponent.value = component;
+    dynamicComponent.value = Headline;
+  } else if (component === "Subheadline") {
+    activeComponent.value = component;
+    dynamicComponent.value = Subheadline;
+  } else if (component === "Timertext") {
+    activeComponent.value = component;
+    dynamicComponent.value = Timertext;
+  } else if (component === "Prewebinar") {
+    activeComponent.value = component;
+    dynamicComponent.value = Prewebinar;
+  } else if (component === "Countdown") {
+    activeComponent.value = component;
+    dynamicComponent.value = Countdown;
+  }
+};
+const backToSidebar = () => {
+  activeComponent.value = null;
+  dynamicComponent.value = null;
+};
 </script>
-
-<style scoped>
-
-.settings-container {
-  margin-top: 10px;
-}
-</style>

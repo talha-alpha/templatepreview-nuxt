@@ -36,7 +36,6 @@
           <Input
             v-model="settings['bgColor']"
             class="font-mono p-2 bg-zinc-800 outline-none text-center"
-            placeholder="#000000"
           />
         </div>
       </div>
