@@ -2,14 +2,14 @@
   <div class="flex flex-col min-h-[600px] min-w-[200px] p-4 rounded-xl text-sm">
     <h2 class="text-lg font-bold mb-6">Edit {{ title }} Settings</h2>
 
-    <!-- Text Input -->
     <TextAreaInput
-      label="Text"
-      v-model="localText"
-      :placeholder="placeholderText"
+    label="Text"
+      :modelValue="localSettings.text"
+      @update:modelValue="handleTextUpdate"
+      placeholder="This is your Sub Headline"
+
     />
 
-    <!-- Alignment -->
     <div class="mb-4">
       <label class="flex overflow-hidden font-bold mb-1">Align</label>
       <AlignmentSelector
@@ -18,21 +18,18 @@
       />
     </div>
 
-    <!-- Font Family -->
     <SelectInput
       label="Font Family"
       v-model="localSettings.fontFamily"
       :options="fontOptions"
     />
 
-    <!-- Font Weight -->
     <SelectInput
       label="Font Weight"
       v-model="localSettings.fontWeight"
       :options="fontWeightOptions"
     />
 
-    <!-- Font Size -->
     <NumberInput
       label="Font Size"
       v-model="localSettings.fontSize"
@@ -40,13 +37,11 @@
       :max="100"
     />
 
-    <!-- Font Color -->
     <div class="mb-4">
       <label class="flex overflow-hidden font-bold mb-1">Font Color</label>
       <ColorPicker v-model="localSettings.fontColor" />
     </div>
 
-    <!-- Background Color -->
     <div class="mb-4">
       <div class="flex justify-between">
         <label class="flex overflow-hidden font-bold mb-1">BG Color</label>
@@ -61,7 +56,6 @@
       <ColorPicker v-model="localSettings.bgColor" />
     </div>
 
-    <!-- Padding -->
     <PaddingControl
       :padding="localSettings.padding"
       @update:padding="(newPadding) => (localSettings.padding = newPadding)"
@@ -77,13 +71,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from "vue";
-import AlignmentSelector from "./AlignmentSelector.vue";
-import SelectInput from "./SelectInput.vue";
-import NumberInput from "./NumberInput.vue";
-import ColorPicker from "./ColorPicker.vue";
-import PaddingControl from "./PaddingControl.vue";
-import TextAreaInput from "./TextAreaInput.vue";
+import { ref, watch } from "vue";
 
 const emit = defineEmits(["update", "updateText"]);
 const props = defineProps({
@@ -91,31 +79,24 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  type: {
-    type: String,
-    default: "subheadline", // Can be "headline" or "subheadline"
-  },
 });
 
 const localSettings = ref({ ...props.settings });
-const localText = ref(
-  props.settings.text ||
-    (props.type === "subheadline"
-      ? "This is your Opening Room Headline"
-      : "This is your Sub Headline")
-);
 
-// Dynamic title and placeholders
-const title = computed(() =>
-  props.type === "headline" ? "Headline" : "Sub Headline"
-);
-const placeholderText = computed(() =>
-  props.type === "subheadline"
-    ? "This is your Opening Room Headline"
-    : "This is your Sub Headline"
-);
+const handleTextUpdate = (newText) => {
+  localSettings.value.text = newText;
+  emit("updateText", newText); 
+};
 
-// Watchers to sync changes
+watch(localSettings, (newSettings) => {
+  emit("update", newSettings); 
+}, { deep: true });
+
+const localText = ref(props.settings.text || "This is your Sub Headline");
+
+const title = computed(() => "Sub Headline");
+const placeholderText = computed(() => "Enter your Sub Headline text here");
+
 watch(localSettings, (newSettings) => emit("update", newSettings), {
   deep: true,
 });
@@ -148,7 +129,6 @@ const alignmentOptions = [
   },
 ];
 
-// Font options
 const fontOptions = ["Arial", "Cambria", "Courier New", "Cursive", "Fantasy"];
 const fontWeightOptions = ["Normal", "Bold"];
 </script>
