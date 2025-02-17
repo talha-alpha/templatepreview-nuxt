@@ -14,7 +14,9 @@
         class="min-h-[770px] rounded-xl bg-zinc-950 m-4"
         id="screen"
         :style="{
-          backgroundImage: backgroundSettings.bgImage ? `url(${backgroundSettings.bgImage})` : 'none',
+          backgroundImage: backgroundSettings.bgImage
+            ? `url(${backgroundSettings.bgImage})`
+            : 'none',
           backgroundColor: backgroundSettings.bgColor,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -27,8 +29,13 @@
         <p :style="timertextStyle">{{ timertextSettings.text }}</p>
 
         <div class="flex gap-2 justify-center mt-2">
-        <div v-if="countdownSettings.time > 0" :style="countdownContainerStyle">
-          <span :style="timerTextStyle">{{ formatTime(countdownSettings.time) }}</span>
+          <div
+            v-if="countdownSettings.time > 0"
+            :style="countdownContainerStyle"
+          >
+            <span :style="timerTextStyle">{{
+              formatTime(countdownSettings.time)
+            }}</span>
 
             <span :style="periodTextStyle" class="p-2 rounded-lg">MIN</span>
             <span :style="periodTextStyle" class="p-2 rounded-lg">SEC</span>
@@ -158,7 +165,7 @@ const componentSettings = ref({
     fontColor: "#008000",
   },
   Countdown: {
-    time: 180, 
+    time: 180,
     duration: 3,
     selectedElement: "timer" || "period",
     period: {
@@ -185,7 +192,9 @@ const countdownSettings = computed(() => componentSettings.value.Countdown);
 const backgroundSettings = computed(() => componentSettings.value.Background);
 
 const headlineStyle = computed(() => getTextStyle(headlineSettings.value));
-const subheadlineStyle = computed(() => getTextStyle(subheadlineSettings.value));
+const subheadlineStyle = computed(() =>
+  getTextStyle(subheadlineSettings.value)
+);
 const timertextStyle = computed(() => getTextStyle(timertextSettings.value));
 
 const timerTextStyle = computed(() => ({
@@ -226,7 +235,9 @@ const getTextStyle = (settings) => ({
 const formatTime = (timeInSeconds) => {
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds % 60;
-  return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  return `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
 };
 
 const getComponent = (name) => {
