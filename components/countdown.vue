@@ -89,7 +89,7 @@
           <label class="flex overflow-hidden font-bold mb-1"> BG Color </label>
           <ModulesButton
             variant="ghost"
-            class="text-destructive hover:text-destructive"
+            class="text-destructive hover:text-destructive cursor-pointer"
             @click="resetBgColor"
           >
             Remove
@@ -152,7 +152,7 @@
           <label class="flex overflow-hidden font-bold mb-1"> BG Color </label>
           <ModulesButton
             variant="ghost"
-            class="text-destructive hover:text-destructive"
+            class="text-destructive hover:text-destructive cursor-pointer"
             @click="resetBgColor"
           >
             Remove
@@ -166,7 +166,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg text-center"
       @click="emitUpdate"
     >
       Update Settings

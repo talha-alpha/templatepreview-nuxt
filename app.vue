@@ -56,7 +56,7 @@
               <span :style="timerTextStyle" class="rounded-lg">
                 {{ formatTime(countdownSettings.time) }}
               </span>
-              <div class="flex justify-around">
+              <div class="flex justify-around gap-2">
                 <span :style="periodTextStyle" class="p-2 rounded-lg"
                   >MINUTES</span
                 >
@@ -208,7 +208,7 @@
         <!-- Save Button -->
         <button
           v-if="!activeComponent"
-          class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-600 justify-center rounded-xl p-4 font-bold w-full"
+          class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-600 justify-center rounded-xl p-2 font-bold w-full"
         >
           Save Settings
         </button>
@@ -289,7 +289,7 @@ const componentSettings = ref({
     timer: {
       fontFamily: "Arial",
       fontWeight: "Bold",
-      fontSize: 38,
+      fontSize: 48,
       fontColor: "#FFFFFF",
       bgColor: "transparent",
     },
@@ -349,10 +349,10 @@ const getTextStyle = (settings) => ({
 });
 
 const formatTime = (timeInSeconds) => {
-  if (timeInSeconds == null || timeInSeconds < 0) return "00:00";
+  if (timeInSeconds == null || timeInSeconds < 0) return "00  00";
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds % 60;
-  return `${minutes.toString().padStart(2, "0")}:${seconds
+  return `${minutes.toString().padStart(2, "0")}  ${seconds
     .toString()
     .padStart(2, "0")}`;
 };
