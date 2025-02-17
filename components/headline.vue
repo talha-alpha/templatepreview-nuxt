@@ -1,9 +1,11 @@
 <template>
-  <div class="flex flex-col min-h-[600px] min-w-[200px] p-4 rounded-xl text-sm">
+  <div
+    class="flex flex-col min-h-[600px] min-w-[200px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl text-sm"
+  >
     <h2 class="text-lg font-bold mb-6">Edit Headline Settings</h2>
-    
-    <TextAreaInput
-    label="Text"
+
+    <ModulesTextAreaInput
+      label="Text"
       :modelValue="localSettings.text"
       @update:modelValue="handleTextUpdate"
       placeholder="This is your Opening Room Headline"
@@ -11,63 +13,66 @@
 
     <div class="mb-4">
       <label class="flex overflow-hidden font-bold mb-1">Align</label>
-      <AlignmentSelector
+      <ModulesAlignmentSelector
         :modelValue="localSettings.alignment"
-        @update:modelValue="v => updateSetting('alignment', v)"
+        @update:modelValue="(v) => updateSetting('alignment', v)"
         :options="alignmentOptions"
       />
     </div>
 
-    <SelectInput
+    <ModulesSelectInput
+      class="mb-4"
       label="Font Family"
       :modelValue="localSettings.fontFamily"
-      @update:modelValue="v => updateSetting('fontFamily', v)"
+      @update:modelValue="(v) => updateSetting('fontFamily', v)"
       :options="fontOptions"
     />
 
-    <SelectInput
+    <ModulesSelectInput
+      class="mb-4"
       label="Font Weight"
       :modelValue="localSettings.fontWeight"
-      @update:modelValue="v => updateSetting('fontWeight', v)"
+      @update:modelValue="(v) => updateSetting('fontWeight', v)"
       :options="fontWeightOptions"
     />
 
-    <NumberInput
+    <ModulesNumberInput
+      class="mb-4"
       label="Font Size"
       :modelValue="localSettings.fontSize"
-      @update:modelValue="v => updateSetting('fontSize', v)"
+      @update:modelValue="(v) => updateSetting('fontSize', v)"
       :min="8"
       :max="100"
     />
 
     <div class="mb-4">
       <label class="flex overflow-hidden font-bold mb-1">Font Color</label>
-      <ColorPicker
+      <ModulesColorPicker
         :modelValue="localSettings.fontColor"
-        @update:modelValue="v => updateSetting('fontColor', v)"
+        @update:modelValue="(v) => updateSetting('fontColor', v)"
       />
     </div>
 
     <div class="mb-4">
       <div class="flex justify-between">
         <label class="flex overflow-hidden font-bold mb-1">BG Color</label>
-        <Button
+        <ModulesButton
           variant="ghost"
           class="text-destructive hover:text-destructive"
           @click="updateSetting('bgColor', 'transparent')"
         >
           Remove
-        </Button>
+        </ModulesButton>
       </div>
-      <ColorPicker
+      <ModulesColorPicker
         :modelValue="localSettings.bgColor"
-        @update:modelValue="v => updateSetting('bgColor', v)"
+        @update:modelValue="(v) => updateSetting('bgColor', v)"
       />
     </div>
 
-    <PaddingControl
+    <ModulesPaddingControl
       :padding="localSettings.padding"
-      @update:padding="v => updateSetting('padding', v)"
+      @update:padding="(v) => updateSetting('padding', v)"
     />
 
     <button
@@ -94,12 +99,16 @@ const localSettings = ref({ ...props.settings });
 
 const handleTextUpdate = (newText) => {
   localSettings.value.text = newText;
-  emit("updateText", newText); 
+  emit("updateText", newText);
 };
 
-watch(localSettings, (newSettings) => {
-  emit("update", newSettings); 
-}, { deep: true });
+watch(
+  localSettings,
+  (newSettings) => {
+    emit("update", newSettings);
+  },
+  { deep: true }
+);
 
 const updateSetting = (key, value) => {
   localSettings.value[key] = value;

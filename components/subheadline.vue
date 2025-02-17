@@ -1,36 +1,40 @@
 <template>
-  <div class="flex flex-col min-h-[600px] min-w-[200px] p-4 rounded-xl text-sm">
+  <div
+    class="flex flex-col min-h-[600px] min-w-[200px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl text-sm"
+  >
     <h2 class="text-lg font-bold mb-6">Edit {{ title }} Settings</h2>
 
-    <TextAreaInput
-    label="Text"
+    <ModulesTextAreaInput
+      label="Text"
       :modelValue="localSettings.text"
       @update:modelValue="handleTextUpdate"
       placeholder="This is your Sub Headline"
-
     />
 
     <div class="mb-4">
       <label class="flex overflow-hidden font-bold mb-1">Align</label>
-      <AlignmentSelector
+      <ModulesAlignmentSelector
         v-model="localSettings.alignment"
         :options="alignmentOptions"
       />
     </div>
 
-    <SelectInput
+    <ModulesSelectInput
+      class="mb-4"
       label="Font Family"
       v-model="localSettings.fontFamily"
       :options="fontOptions"
     />
 
-    <SelectInput
+    <ModulesSelectInput
+      class="mb-4"
       label="Font Weight"
       v-model="localSettings.fontWeight"
       :options="fontWeightOptions"
     />
 
-    <NumberInput
+    <ModulesNumberInput
+      class="mb-4"
       label="Font Size"
       v-model="localSettings.fontSize"
       :min="8"
@@ -39,24 +43,25 @@
 
     <div class="mb-4">
       <label class="flex overflow-hidden font-bold mb-1">Font Color</label>
-      <ColorPicker v-model="localSettings.fontColor" />
+      <ModulesColorPicker v-model="localSettings.fontColor" />
     </div>
 
     <div class="mb-4">
       <div class="flex justify-between">
         <label class="flex overflow-hidden font-bold mb-1">BG Color</label>
-        <Button
+        <ModulesButton
           variant="ghost"
           class="text-destructive hover:text-destructive"
           @click="resetBgColor"
         >
           Remove
-        </Button>
+        </ModulesButton>
       </div>
-      <ColorPicker v-model="localSettings.bgColor" />
+      <ModulesColorPicker v-model="localSettings.bgColor" />
     </div>
 
-    <PaddingControl
+    <ModulesPaddingControl
+      class="mb-4"
       :padding="localSettings.padding"
       @update:padding="(newPadding) => (localSettings.padding = newPadding)"
     />
@@ -85,12 +90,16 @@ const localSettings = ref({ ...props.settings });
 
 const handleTextUpdate = (newText) => {
   localSettings.value.text = newText;
-  emit("updateText", newText); 
+  emit("updateText", newText);
 };
 
-watch(localSettings, (newSettings) => {
-  emit("update", newSettings); 
-}, { deep: true });
+watch(
+  localSettings,
+  (newSettings) => {
+    emit("update", newSettings);
+  },
+  { deep: true }
+);
 
 const localText = ref(props.settings.text || "This is your Sub Headline");
 

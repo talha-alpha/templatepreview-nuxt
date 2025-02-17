@@ -1,9 +1,9 @@
 <template>
   <div
-    class="min-h-[800px] max-w-[1200px] text-white flex overflow-hidden m-[150px] mt-[30px] rounded-xl bg-zinc-900 border-black border-2"
+    class="xl:min-h-[800px] xl:max-w-[1500px] lg:min-h-[620px] lg:max-w-[1100px] text-white flex overflow-hidden m-[150px] mt-[30px] rounded-xl bg-zinc-900 border-black border-2"
   >
     <div
-      class="flex-col overflow-hidden min-h-[750px] min-w-[800px] justify-start bg-zinc-800 m-4 p-4 rounded-xl"
+      class="flex-col overflow-hidden xl:min-h-[750px] xl:min-w-[1100px] lg:min-h-[600px] lg:min-w-[600px] justify-start bg-zinc-800 m-4 p-4 rounded-xl"
     >
       <strong
         class="text-gray-200 flex font-extrabold p-2 border-b-2 border-zinc-600 self-center"
@@ -11,7 +11,7 @@
         Template Preview
       </strong>
       <div
-        class="min-h-[770px] rounded-xl bg-zinc-950 m-4"
+        class="relative xl:min-h-[770px] rounded-xl bg-zinc-950 m-4 overflow-hidden"
         id="screen"
         :style="{
           backgroundImage: backgroundSettings.bgImage
@@ -22,23 +22,132 @@
           backgroundPosition: 'center',
         }"
       >
-        <p :style="headlineStyle">{{ headlineSettings.text }}</p>
+        <video
+          v-if="prewebinarSettings.mediaType === 'video'"
+          ref="mediaElement"
+          :src="prewebinarSettings.mediaFile"
+          @ended="isPlaying = false"
+          muted
+          loop
+          autoplay
+          class="absolute top-0 left-0 w-full h-full object-cover"
+        ></video>
 
-        <p :style="subheadlineStyle">{{ subheadlineSettings.text }}</p>
+        <audio
+          v-else-if="prewebinarSettings.mediaType === 'audio'"
+          ref="mediaElement"
+          :src="prewebinarSettings.mediaFile"
+          @ended="isPlaying = false"
+          class="hidden"
+        ></audio>
 
-        <p :style="timertextStyle">{{ timertextSettings.text }}</p>
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-        <div class="flex gap-2 justify-center mt-2">
+        <div class="relative z-10 p-6 text-white">
+          <p :style="headlineStyle">{{ headlineSettings.text }}</p>
+          <p :style="subheadlineStyle">{{ subheadlineSettings.text }}</p>
+          <p :style="timertextStyle">{{ timertextSettings.text }}</p>
+
+          <div class="flex gap-2 justify-center mt-4">
+            <div
+              v-if="countdownSettings.time > 0"
+              :style="countdownContainerStyle"
+            >
+              <span :style="timerTextStyle" class="rounded-lg">
+                {{ formatTime(countdownSettings.time) }}
+              </span>
+              <div class="flex justify-around">
+                <span :style="periodTextStyle" class="p-2 rounded-lg"
+                  >MINUTES</span
+                >
+                <span :style="periodTextStyle" class="p-2 rounded-lg"
+                  >SECONDS</span
+                >
+              </div>
+            </div>
+          </div>
+
           <div
-            v-if="countdownSettings.time > 0"
-            :style="countdownContainerStyle"
+            v-if="prewebinarSettings.mediaType === 'video'"
+            class="p-2 flex justify-center gap-4 mt-4"
           >
-            <span :style="timerTextStyle">{{
-              formatTime(countdownSettings.time)
-            }}</span>
-
-            <span :style="periodTextStyle" class="p-2 rounded-lg">MIN</span>
-            <span :style="periodTextStyle" class="p-2 rounded-lg">SEC</span>
+            <button
+              @click="togglePlay"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"
+            >
+              <svg
+                v-if="isPlaying"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14.752 11.168l-5.197-2.985A1 1 0 008 9v6a1 1 0 001.555.832l5.197-2.985a1 1 0 000-1.664z"
+                ></path>
+              </svg>
+              {{ isPlaying ? "Pause" : "Play" }}
+            </button>
+          </div>
+          <div
+            v-if="prewebinarSettings.mediaType === 'audio'"
+            class="p-2 flex justify-center gap-4 mt-4"
+          >
+            <button
+              @click="togglePlay"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"
+            >
+              <svg
+                v-if="isPlaying"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="w-5 h-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14.752 11.168l-5.197-2.985A1 1 0 008 9v6a1 1 0 001.555.832l5.197-2.985a1 1 0 000-1.664z"
+                ></path>
+              </svg>
+              {{ isPlaying ? "Pause" : "Play" }}
+            </button>
           </div>
         </div>
       </div>
@@ -46,7 +155,7 @@
 
     <div id="sidenav" class="p-2 rounded-xl">
       <div
-        class="flex-row overflow-hidden min-h-[700px] min-w-[300px] rounded-xl justify-end"
+        class="flex-row overflow-hidden xl:min-h-[700px] xl:min-w-[300px] lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl justify-end"
       >
         <button
           v-if="activeComponent"
@@ -73,28 +182,30 @@
           Back
         </button>
 
+        <!-- Sidebar Menu -->
         <div v-if="!activeComponent">
           <h2 class="text-lg font-bold my-2 text-gray-200">Template</h2>
           <p
             v-for="comp in activeComponents"
             :key="comp"
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold hover:bg-zinc-700 cursor-pointer"
+            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold cursor-pointer"
             @click="toggleSettings(comp)"
           >
             {{ comp }}
           </p>
         </div>
 
+        <!-- Dynamic Component -->
         <div>
           <component
-            v-if="activeComponents.includes(activeComponent)"
+            v-if="activeComponent"
             :is="dynamicComponent"
             :settings="getSettings(activeComponent)"
-            :key="activeComponent"
             @update="updateSettings(activeComponent, $event)"
           />
         </div>
 
+        <!-- Save Button -->
         <button
           v-if="!activeComponent"
           class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-600 justify-center rounded-xl p-4 font-bold w-full"
@@ -107,7 +218,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import Background from "@/components/background.vue";
 import Headline from "@/components/headline.vue";
 import Subheadline from "@/components/subheadline.vue";
@@ -137,7 +248,7 @@ const componentSettings = ref({
     fontSize: 40,
     fontColor: "#FFFFFF",
     bgColor: "transparent",
-    padding: { top: 30, right: 10, bottom: 10, left: 10 },
+    padding: { top: 150, right: 10, bottom: 10, left: 10 },
   },
   Subheadline: {
     text: "This is your subheadline",
@@ -165,24 +276,26 @@ const componentSettings = ref({
     fontColor: "#008000",
   },
   Countdown: {
-    time: 180,
-    duration: 3,
-    selectedElement: "timer" || "period",
+    time: 1800,
+    duration: 30,
+    selectedElement: "timer",
     period: {
       fontFamily: "Arial",
       fontWeight: "Normal",
-      fontSize: 28,
+      fontSize: 12,
       fontColor: "#FFFFFF",
+      bgColor: "#000000",
     },
     timer: {
       fontFamily: "Arial",
       fontWeight: "Bold",
       fontSize: 38,
       fontColor: "#FFFFFF",
+      bgColor: "transparent",
     },
     bgColor: "transparent",
   },
-  Background: { bgColor: "#000108", bgImage: null },
+  Background: { bgColor: "#121212", bgImage: null },
 });
 
 const headlineSettings = computed(() => componentSettings.value.Headline);
@@ -202,6 +315,7 @@ const timerTextStyle = computed(() => ({
   fontWeight: countdownSettings.value.timer.fontWeight,
   fontSize: `${countdownSettings.value.timer.fontSize}px`,
   color: countdownSettings.value.timer.fontColor,
+  backgroundColor: countdownSettings.value.timer.bgColor,
   textAlign: "center",
   display: "block",
 }));
@@ -211,7 +325,7 @@ const periodTextStyle = computed(() => ({
   fontWeight: countdownSettings.value.period.fontWeight,
   fontSize: `${countdownSettings.value.period.fontSize}px`,
   color: countdownSettings.value.period.fontColor,
-  backgroundColor: countdownSettings.value.bgColor,
+  backgroundColor: countdownSettings.value.period.bgColor,
 }));
 
 const countdownContainerStyle = computed(() => ({
@@ -230,9 +344,12 @@ const getTextStyle = (settings) => ({
   backgroundColor: settings.bgColor,
   textAlign: settings.alignment,
   padding: `${settings.padding.top}px ${settings.padding.right}px ${settings.padding.bottom}px ${settings.padding.left}px`,
+  position: "relative",
+  zIndex: 10,
 });
 
 const formatTime = (timeInSeconds) => {
+  if (timeInSeconds == null || timeInSeconds < 0) return "00:00";
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds % 60;
   return `${minutes.toString().padStart(2, "0")}:${seconds
@@ -261,6 +378,43 @@ const updateSettings = (name, newSettings) => {
   };
 };
 
+const prewebinarSettings = computed(
+  () => componentSettings.value.Prewebinar || {}
+);
+const mediaElement = ref(null);
+const isPlaying = ref(false);
+
+const togglePlay = () => {
+  if (isPlaying.value) {
+    mediaElement.value.pause();
+  } else {
+    mediaElement.value.play();
+  }
+  isPlaying.value = !isPlaying.value;
+};
+
+const stopMedia = () => {
+  mediaElement.value.pause();
+  mediaElement.value.currentTime = 0;
+  isPlaying.value = false;
+};
+
+watch(
+  () => prewebinarSettings.value.mediaFile,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      stopMedia();
+      if (mediaElement.value) {
+        mediaElement.value.load();
+      }
+    }
+  }
+);
+
+onUnmounted(() => {
+  stopMedia();
+});
+
 const toggleSettings = (component) => {
   activeComponent.value = component;
   dynamicComponent.value = getComponent(component);
@@ -273,12 +427,23 @@ const backToSidebar = () => {
 
 onMounted(() => {
   if (countdownSettings.value.time > 0) {
-    const interval = setInterval(() => {
+    countdownInterval.value = setInterval(() => {
       componentSettings.value.Countdown.time--;
       if (componentSettings.value.Countdown.time <= 0) {
-        clearInterval(interval);
+        clearInterval(countdownInterval.value);
       }
     }, 1000);
   }
 });
+
+onUnmounted(() => {
+  if (countdownInterval.value) {
+    clearInterval(countdownInterval.value);
+  }
+});
 </script>
+<style>
+body {
+  background-color: black;
+}
+</style>

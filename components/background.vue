@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex flex-col min-h-[550px] min-w-[230px] p-2 rounded-xl bg-background text-sm mb-2 mt-4"
+    class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] rounded-xl bg-background text-sm mb-2 mt-4"
   >
-    <h4 class="text-lg font-bold mb-2">Background Type</h4>
+    <h4 class="text-lg font-bold mb-6">Background Type</h4>
 
     <select
       v-model="backgroundType"
@@ -14,43 +14,38 @@
 
     <div v-if="backgroundType === 'color'" class="mb-4">
       <div class="flex justify-between">
-        <Label class="flex overflow-hidden font-bold mb-2">BG Color</Label>
-        <Button
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2"
+          >BG Color</ModulesLabel
+        >
+        <ModulesButton
           variant="ghost"
           class="text-destructive hover:text-destructive"
           @click="handleColorChange('bgColor', 'transparent')"
         >
           Remove
-        </Button>
+        </ModulesButton>
       </div>
-      <div class="flex gap-2 items-center mb-4">
-        <input
-          type="color"
-          v-model="settings.bgColor"
-          class="w-10 h-10 rounded cursor-pointer bg-zinc-900"
-          placeholder="#000000"
-        />
-        <div
-          class="flex overflow-hidden justify-between border-zinc-600 border-2 rounded-lg"
-        >
-          <p class="flex overflow-hidden text-center mx-4 p-2">HEX</p>
-          <Input
-            v-model="settings.bgColor"
-            class="font-mono p-2 bg-zinc-800 outline-none text-center"
-          />
-        </div>
-      </div>
+      <ModulesColorPicker
+        :modelValue="settings.bgColor"
+        @update:modelValue="(v) => handleColorChange('bgColor', v)"
+      />
     </div>
 
     <div v-if="backgroundType === 'image'" class="mb-4">
-      <Label class="flex overflow-hidden font-bold mb-2">Background Image</Label>
+      <ModulesLabel class="flex overflow-hidden font-bold mb-2"
+        >Background Image</ModulesLabel
+      >
       <div class="flex flex-col gap-2">
         <select
           v-model="selectedImage"
           class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2 mb-2"
         >
           <option value="">Select an image</option>
-          <option v-for="image in imageOptions" :key="image.value" :value="image.value">
+          <option
+            v-for="image in imageOptions"
+            :key="image.value"
+            :value="image.value"
+          >
             {{ image.label }}
           </option>
         </select>
@@ -64,18 +59,20 @@
       </div>
     </div>
 
-    <Button
-      class="bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg"
+    <ModulesButton
+      class="bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings
-    </Button>
+    </ModulesButton>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
-import bg1 from "./img/bg1.jpg"; 
+import bg1 from "./img/bg1.jpg";
+import bg2 from "./img/bg2.jpeg";
+import bg3 from "./img/bg3.jpeg";
 
 const emit = defineEmits(["update"]);
 const props = defineProps({
@@ -85,24 +82,24 @@ const props = defineProps({
   },
 });
 
-const backgroundType = ref("color"); 
-const selectedImage = ref(""); 
+const backgroundType = ref("color");
+const selectedImage = ref("");
 const localSettings = ref({ ...props.settings });
 
 const imageOptions = [
-  { label: "Image 1", value: bg1 }, 
-  { label: "Empty Option 1", value: "" }, 
-  { label: "Empty Option 2", value: "" }, 
+  { label: "Image 1", value: bg1 },
+  { label: "Image 2", value: bg2 },
+  { label: "Image 3", value: bg3 },
 ];
 
 watch(selectedImage, (newImage) => {
-  localSettings.value.bgImage = newImage; 
-  emit("update", localSettings.value); 
+  localSettings.value.bgImage = newImage;
+  emit("update", localSettings.value);
 });
 
 const handleColorChange = (key, value) => {
   localSettings.value[key] = value;
-  emit("update", localSettings.value); 
+  emit("update", localSettings.value);
 };
 
 const updateSettings = () => {

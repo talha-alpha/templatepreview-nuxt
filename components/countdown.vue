@@ -1,154 +1,176 @@
 <template>
-  <div class="flex flex-col min-h-[700px] min-w-[300px] p-4 rounded-xl bg-background text-sm">
+  <div
+    class="flex flex-col min-h-[700px] min-w-[300px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm"
+  >
     <h2 class="text-lg font-bold mb-6">Set Duration</h2>
 
     <div class="mb-10">
-      <Label class="flex overflow-hidden font-bold mb-2">Duration (Minutes)</Label>
+      <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        Duration (Minutes)
+      </ModulesLabel>
       <div class="flex gap-4">
-        <NumberInput
+        <ModulesNumberInput
           :modelValue="localSettings.duration"
-          @update:modelValue="v => updateSetting('duration', v)"
+          @update:modelValue="(v) => updateSetting('duration', v)"
           :min="1"
           :max="30"
           placeholder="Max 30"
-          class="bg-zinc-800 w-full p-4 text-white rounded-lg outline-none border-zinc-600 border-2"
+          class="w-full text-white rounded-lg outline-none bg-none"
         />
         <span
-          class="flex items-center rounded-lg bg-zinc-800 p-4 border-zinc-600 border-2"
-        >MIN</span>
+          class="flex items-center rounded-lg bg-zinc-800 p-2 border-zinc-600 border-2"
+        >
+          MIN
+        </span>
       </div>
     </div>
 
     <h2 class="text-lg font-bold mb-6">Edit Settings</h2>
 
     <div class="mb-4">
-      <Label class="flex overflow-hidden font-bold mb-2">Choose Element To Adjust</Label>
-      <SelectInput
+      <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        Choose Element To Adjust
+      </ModulesLabel>
+      <ModulesSelectInput
         :modelValue="localSettings.selectedElement"
-        @update:modelValue="v => updateSetting('selectedElement', v)"
+        @update:modelValue="updateSelectedElement"
         :options="elementOptions"
-        placeholder="Select Element"
+        placeholder="Select the Element"
       />
     </div>
 
-    <template v-if="localSettings.selectedElement === 'period'">
+    <div v-if="localSettings.selectedElement === 'Period Settings'">
+      <h3 class="text-md font-bold mb-4">Period Settings</h3>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Period Font Family</Label>
-        <SelectInput
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Period Font Family
+        </ModulesLabel>
+        <ModulesSelectInput
           :modelValue="localSettings.period.fontFamily"
-          @update:modelValue="v => updatePeriodSetting('fontFamily', v)"
+          @update:modelValue="(v) => updatePeriodSetting('fontFamily', v)"
           :options="fontOptions"
           placeholder="Arial"
         />
       </div>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Period Font Weight</Label>
-        <SelectInput
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Period Font Weight
+        </ModulesLabel>
+        <ModulesSelectInput
           :modelValue="localSettings.period.fontWeight"
-          @update:modelValue="v => updatePeriodSetting('fontWeight', v)"
-          :options="fontWeight"
+          @update:modelValue="(v) => updatePeriodSetting('fontWeight', v)"
+          :options="fontWeightOptions"
           placeholder="Normal"
         />
       </div>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Period Font Size</Label>
-        <div class="flex gap-4">
-          <NumberInput
-            :modelValue="localSettings.period.fontSize"
-            @update:modelValue="v => updatePeriodSetting('fontSize', v)"
-            :min="8"
-            :max="100"
-            placeholder="32"
-            class="bg-zinc-800 w-full p-4 text-white rounded-lg outline-none border-zinc-600 border-2"
-          />
-          <span
-            class="flex items-center rounded-lg bg-zinc-800 p-4 border-zinc-600 border-2"
-          >PX</span>
-        </div>
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Period Font Size
+        </ModulesLabel>
+        <ModulesNumberInput
+          :modelValue="localSettings.period.fontSize"
+          @update:modelValue="(v) => updatePeriodSetting('fontSize', v)"
+          :min="8"
+          :max="100"
+          placeholder="32"
+        />
       </div>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Period Font Color</Label>
-        <div class="flex gap-2 items-center">
-          <ColorPicker
-            :modelValue="localSettings.period.fontColor"
-            @update:modelValue="v => updatePeriodSetting('fontColor', v)"
-            class="w-10 h-10 rounded cursor-pointer bg-zinc-900"
-          />
-          <div class="flex overflow-hidden justify-between border-zinc-600 border-2 rounded-lg">
-            <p class="flex overflow-hidden text-center mx-4 p-2">HEX</p>
-            <Input
-              :modelValue="localSettings.period.fontColor"
-              @update:modelValue="v => updatePeriodSetting('fontColor', v)"
-              class="font-mono p-2 bg-zinc-800 outline-none text-center"
-              placeholder="#FFFFFF"
-            />
-          </div>
-        </div>
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Period Font Color
+        </ModulesLabel>
+        <ModulesColorPicker
+          :modelValue="localSettings.period.fontColor"
+          @update:modelValue="(v) => updatePeriodSetting('fontColor', v)"
+        />
       </div>
-    </template>
+      <div class="mb-4">
+        <div class="flex justify-between">
+          <label class="flex overflow-hidden font-bold mb-1"> BG Color </label>
+          <ModulesButton
+            variant="ghost"
+            class="text-destructive hover:text-destructive"
+            @click="resetBgColor"
+          >
+            Remove
+          </ModulesButton>
+        </div>
+        <ModulesColorPicker
+          :modelValue="localSettings.period.bgColor"
+          @update:modelValue="(v) => updatePeriodSetting('bgColor', v)"
+        />
+      </div>
+    </div>
 
-    <template v-if="localSettings.selectedElement === 'timer'">
+    <div v-else-if="localSettings.selectedElement === 'Timer Settings'">
+      <h3 class="text-md font-bold mb-4">Timer Settings</h3>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Timer Font Family</Label>
-        <SelectInput
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Timer Font Family
+        </ModulesLabel>
+        <ModulesSelectInput
           :modelValue="localSettings.timer.fontFamily"
-          @update:modelValue="v => updateTimerSetting('fontFamily', v)"
+          @update:modelValue="(v) => updateTimerSetting('fontFamily', v)"
           :options="fontOptions"
           placeholder="Arial"
         />
       </div>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Timer Font Weight</Label>
-        <SelectInput
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Timer Font Weight
+        </ModulesLabel>
+        <ModulesSelectInput
           :modelValue="localSettings.timer.fontWeight"
-          @update:modelValue="v => updateTimerSetting('fontWeight', v)"
-          :options="fontWeight"
+          @update:modelValue="(v) => updateTimerSetting('fontWeight', v)"
+          :options="fontWeightOptions"
           placeholder="Normal"
         />
       </div>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Timer Font Size</Label>
-        <div class="flex gap-4">
-          <NumberInput
-            :modelValue="localSettings.timer.fontSize"
-            @update:modelValue="v => updateTimerSetting('fontSize', v)"
-            :min="8"
-            :max="100"
-            placeholder="32"
-            class="bg-zinc-800 w-full p-4 text-white rounded-lg outline-none border-zinc-600 border-2"
-          />
-          <span
-            class="flex items-center rounded-lg bg-zinc-800 p-4 border-zinc-600 border-2"
-          >PX</span>
-        </div>
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Timer Font Size
+        </ModulesLabel>
+        <ModulesNumberInput
+          :modelValue="localSettings.timer.fontSize"
+          @update:modelValue="(v) => updateTimerSetting('fontSize', v)"
+          :min="8"
+          :max="100"
+          placeholder="32"
+        />
       </div>
       <div class="mb-4">
-        <Label class="flex overflow-hidden font-bold mb-2">Timer Font Color</Label>
-        <div class="flex gap-2 items-center">
-          <ColorPicker
-            :modelValue="localSettings.timer.fontColor"
-            @update:modelValue="v => updateTimerSetting('fontColor', v)"
-            class="w-10 h-10 rounded cursor-pointer bg-zinc-900"
-          />
-          <div class="flex overflow-hidden justify-between border-zinc-600 border-2 rounded-lg">
-            <p class="flex overflow-hidden text-center mx-4 p-2">HEX</p>
-            <Input
-              :modelValue="localSettings.timer.fontColor"
-              @update:modelValue="v => updateTimerSetting('fontColor', v)"
-              class="font-mono p-2 bg-zinc-800 outline-none text-center"
-              placeholder="#FFFFFF"
-            />
-          </div>
-        </div>
+        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+          Timer Font Color
+        </ModulesLabel>
+        <ModulesColorPicker
+          :modelValue="localSettings.timer.fontColor"
+          @update:modelValue="(v) => updateTimerSetting('fontColor', v)"
+        />
       </div>
-    </template>
+      <div class="mb-4">
+        <div class="flex justify-between">
+          <label class="flex overflow-hidden font-bold mb-1"> BG Color </label>
+          <ModulesButton
+            variant="ghost"
+            class="text-destructive hover:text-destructive"
+            @click="resetBgColor"
+          >
+            Remove
+          </ModulesButton>
+        </div>
+        <ModulesColorPicker
+          :modelValue="localSettings.period.bgColor"
+          @update:modelValue="(v) => updateTimerSetting('bgColor', v)"
+        />
+      </div>
+    </div>
 
-    <Button
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg"
+    <ModulesButton
+      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg text-center"
       @click="emitUpdate"
     >
       Update Settings
-    </Button>
+    </ModulesButton>
   </div>
 </template>
 
@@ -164,62 +186,98 @@ const props = defineProps({
 });
 
 const localSettings = ref({
-  ...props.settings,
-  duration: 1,
-  selectedElement: "",
+  duration: props.settings.duration || 1,
+  selectedElement: props.settings.selectedElement || "Period Settings",
   period: {
-    fontFamily: "Arial",
-    fontWeight: "Normal",
-    fontSize: 32,
-    fontColor: "#FFFFFF",
+    fontFamily: props.settings.period?.fontFamily || "Arial",
+    fontWeight: props.settings.period?.fontWeight || "Normal",
+    fontSize: props.settings.period?.fontSize || 32,
+    fontColor: props.settings.period?.fontColor || "#FFFFFF",
+    bgColor: props.settings.period?.bgColor || "transparent",
   },
   timer: {
-    fontFamily: "Arial",
-    fontWeight: "Normal",
-    fontSize: 32,
-    fontColor: "#FFFFFF",
+    fontFamily: props.settings.timer?.fontFamily || "Arial",
+    fontWeight: props.settings.timer?.fontWeight || "Normal",
+    fontSize: props.settings.timer?.fontSize || 32,
+    fontColor: props.settings.timer?.fontColor || "#FFFFFF",
+    bgColor: props.settings.timer?.bgColor || "transparent",
   },
 });
 
-const elementOptions = [
-  { label: "Period Setting", value: "period" },
-  { label: "Timer Setting", value: "timer" },
-];
-
+// Options for the select input
+const elementOptions = ["Period Settings", "Timer Settings"];
 const fontOptions = ["Arial", "Cambria", "Courier New", "Cursive", "Fantasy"];
-const fontWeight = ["Normal", "Bold"];
+const fontWeightOptions = ["Normal", "Bold"];
 
-const updateSetting = (key, value) => {
-  localSettings.value[key] = value;
-};
-
-const updatePeriodSetting = (key, value) => {
-  localSettings.value.period[key] = value;
-};
-
-const updateTimerSetting = (key, value) => {
-  localSettings.value.timer[key] = value;
-};
-
+// Helper: emit updated settings to parent
 const emitUpdate = () => {
   emit("update", { ...localSettings.value });
 };
 
+// Generic update function (for properties like duration)
+const updateSetting = (key, value) => {
+  localSettings.value[key] = value;
+  emitUpdate();
+};
+
+// Update period settings
+const updatePeriodSetting = (key, value) => {
+  localSettings.value.period[key] = value;
+  console.log(`Updated period setting: ${key} = ${value}`);
+  emitUpdate();
+};
+
+// Update timer settings
+const updateTimerSetting = (key, value) => {
+  localSettings.value.timer[key] = value;
+  console.log(`Updated timer setting: ${key} = ${value}`);
+  emitUpdate();
+};
+
+// Update the selected element
+const updateSelectedElement = (value) => {
+  localSettings.value.selectedElement = value;
+  emitUpdate();
+};
+
+// Reset BG Color for the currently active element
+const resetBgColor = () => {
+  if (localSettings.value.selectedElement === "Period Settings") {
+    localSettings.value.period.bgColor = "transparent";
+    console.log("Reset Period BG Color to transparent");
+  } else if (localSettings.value.selectedElement === "Timer Settings") {
+    localSettings.value.timer.bgColor = "transparent";
+    console.log("Reset Timer BG Color to transparent");
+  }
+  emitUpdate();
+};
+
+// Watch for prop changes and update local state (deep merge)
 watch(
   () => props.settings,
   (newSettings) => {
-    localSettings.value = { ...newSettings };
+    localSettings.value.duration =
+      newSettings.duration || localSettings.value.duration;
+    localSettings.value.selectedElement =
+      newSettings.selectedElement || localSettings.value.selectedElement;
+    localSettings.value.period = {
+      ...localSettings.value.period,
+      ...newSettings.period,
+    };
+    localSettings.value.timer = {
+      ...localSettings.value.timer,
+      ...newSettings.timer,
+    };
   },
   { deep: true }
 );
 
+// Ensure the selected element remains valid
 watch(
-  () => localSettings.value.duration,
-  (newDuration) => {
-    if (newDuration > 30) {
-      localSettings.value.duration = 30;
-    } else if (newDuration < 1) {
-      localSettings.value.duration = 1;
+  () => localSettings.value.selectedElement,
+  (newElement) => {
+    if (!elementOptions.includes(newElement)) {
+      localSettings.value.selectedElement = "Period Settings"; // fallback
     }
   }
 );

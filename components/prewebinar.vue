@@ -1,11 +1,13 @@
 <template>
   <div
-    class="flex flex-col min-h-[700px] min-w-[300px] p-4 rounded-xl bg-background text-sm"
+    class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-4 rounded-xl lg:min-h-[700px] lg:min-w-[220px] lg:p-2 bg-background text-sm"
   >
     <h2 class="text-lg font-bold mb-6">Pre-Webinar Media</h2>
 
     <div class="mb-4">
-      <Label class="flex overflow-hidden font-bold">Pre-Webinar Media Type</Label>
+      <ModulesLabel class="flex overflow-hidden font-bold"
+        >Pre-Webinar Media Type</ModulesLabel
+      >
       <select
         v-model="mediaType"
         class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
@@ -17,29 +19,43 @@
     </div>
 
     <div v-if="mediaType" class="mb-4">
-      <Label class="flex overflow-hidden font-bold">Pre-Webinar Media File</Label>
+      <ModulesLabel class="flex overflow-hidden font-bold"
+        >Pre-Webinar Media File</ModulesLabel
+      >
       <select
         v-model="selectedMedia"
         class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
       >
         <option value="">Select Media File</option>
-        <option v-for="media in mediaOptions" :key="media.value" :value="media.value">
+        <option
+          v-for="media in mediaOptions"
+          :key="media.value"
+          :value="media.value"
+        >
           {{ media.label }}
         </option>
       </select>
     </div>
 
-    <Button
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg"
+    <ModulesButton
+      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-4 font-bold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings
-    </Button>
+    </ModulesButton>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
+
+import Audio1 from "./audio/audio1.mp3";
+import Audio2 from "./audio/audio2.mp3";
+import Audio3 from "./audio/audio3.mp3";
+
+import Video1 from "./video/video1.mp4";
+import Video2 from "./video/video2.mp4";
+import Video3 from "./video/video3.mp4";
 
 const emit = defineEmits(["update"]);
 const props = defineProps({
@@ -49,33 +65,44 @@ const props = defineProps({
   },
 });
 
-const mediaType = ref(""); 
-const selectedMedia = ref(""); 
 const localSettings = ref({ ...props.settings });
 
 const mediaOptions = ref([]);
+const mediaType = ref(localSettings.value.mediaType || "");
+const selectedMedia = ref(localSettings.value.mediaFile || "");
+
+watch(mediaType, (newMediaType) => {
+  // ... existing mediaOptions logic
+  localSettings.value.mediaType = newMediaType; // Add this
+  emit("update", localSettings.value); // Emit immediately
+});
+
+watch(selectedMedia, (newMedia) => {
+  localSettings.value.mediaFile = newMedia;
+  emit("update", localSettings.value);
+});
 
 watch(mediaType, (newMediaType) => {
   if (newMediaType === "audio") {
     mediaOptions.value = [
-      { label: "Audio File 1", value: "/audio/audio1.mp3" },
-      { label: "Audio File 2", value: "/audio/audio2.mp3" },
-      { label: "Audio File 3", value: "/audio/audio3.mp3" },
+      { label: "Audio 1", value: Audio1 },
+      { label: "Audio 2", value: Audio2 },
+      { label: "Audio 3", value: Audio3 },
     ];
   } else if (newMediaType === "video") {
     mediaOptions.value = [
-      { label: "Video File 1", value: "/video/video1.mp4" },
-      { label: "Video File 2", value: "/video/video2.mp4" },
-      { label: "Video File 3", value: "/video/video3.mp4" },
+      { label: "Video 1", value: Video1 },
+      { label: "Video 2", value: Video2 },
+      { label: "Video 3", value: Video3 },
     ];
   } else {
-    mediaOptions.value = []; 
+    mediaOptions.value = [];
   }
-  selectedMedia.value = ""; 
+  selectedMedia.value = "";
 });
 
 watch(selectedMedia, (newMedia) => {
-  localSettings.value.mediaFile = newMedia; 
+  localSettings.value.mediaFile = newMedia;
   emit("update", localSettings.value);
 });
 
@@ -91,4 +118,3 @@ watch(
   { deep: true }
 );
 </script>
-
