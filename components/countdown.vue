@@ -2,9 +2,9 @@
   <div
     class="flex flex-col min-h-[700px] min-w-[300px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm"
   >
-    <h2 class="text-lg font-bold mb-6">Set Duration</h2>
+    <h2 class="text-lg font-bold mb-4">Set Duration</h2>
 
-    <div class="mb-10">
+    <div class="mb-8">
       <ModulesLabel class="flex overflow-hidden font-bold mb-2">
         Duration (Minutes)
       </ModulesLabel>
@@ -25,24 +25,24 @@
       </div>
     </div>
 
-    <h2 class="text-lg font-bold mb-6">Edit Settings</h2>
+    <h2 class="text-lg font-bold mb-2">Edit Settings</h2>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+      <ModulesLabel class="flex overflow-hidden font-bold">
         Choose Element To Adjust
       </ModulesLabel>
       <ModulesSelectInput
         :modelValue="localSettings.selectedElement"
         @update:modelValue="updateSelectedElement"
         :options="elementOptions"
-        placeholder="Select the Element"
+        placeholder="Period Settings"
       />
     </div>
 
     <div v-if="localSettings.selectedElement === 'Period Settings'">
-      <h3 class="text-md font-bold mb-4">Period Settings</h3>
+      <h3 class="text-lg font-bold mb-4">Period Settings</h3>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Period Font Family
         </ModulesLabel>
         <ModulesSelectInput
@@ -53,7 +53,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Period Font Weight
         </ModulesLabel>
         <ModulesSelectInput
@@ -64,7 +64,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Period Font Size
         </ModulesLabel>
         <ModulesNumberInput
@@ -76,7 +76,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Period Font Color
         </ModulesLabel>
         <ModulesColorPicker
@@ -86,7 +86,7 @@
       </div>
       <div class="mb-4">
         <div class="flex justify-between">
-          <label class="flex overflow-hidden font-bold mb-1"> BG Color </label>
+          <label class="flex overflow-hidden font-bold"> BG Color </label>
           <ModulesButton
             variant="ghost"
             class="text-destructive hover:text-destructive cursor-pointer"
@@ -103,9 +103,9 @@
     </div>
 
     <div v-else-if="localSettings.selectedElement === 'Timer Settings'">
-      <h3 class="text-md font-bold mb-4">Timer Settings</h3>
+      <h3 class="text-lg font-bold mb-4">Timer Settings</h3>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Timer Font Family
         </ModulesLabel>
         <ModulesSelectInput
@@ -116,7 +116,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Timer Font Weight
         </ModulesLabel>
         <ModulesSelectInput
@@ -127,7 +127,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Timer Font Size
         </ModulesLabel>
         <ModulesNumberInput
@@ -139,7 +139,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+        <ModulesLabel class="flex overflow-hidden font-bold">
           Timer Font Color
         </ModulesLabel>
         <ModulesColorPicker
@@ -149,7 +149,7 @@
       </div>
       <div class="mb-4">
         <div class="flex justify-between">
-          <label class="flex overflow-hidden font-bold mb-1"> BG Color </label>
+          <label class="flex overflow-hidden font-bold"> BG Color </label>
           <ModulesButton
             variant="ghost"
             class="text-destructive hover:text-destructive cursor-pointer"

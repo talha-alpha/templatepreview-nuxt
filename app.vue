@@ -1,29 +1,36 @@
 <template>
   <div
-    class="xl:min-h-[800px] xl:max-w-[1500px] lg:min-h-[620px] lg:max-w-[1100px] text-white flex overflow-hidden mx-auto mt-[30px] rounded-xl bg-zinc-900 border-black border-2"
+    class="xl:min-w-full lg:max-w-[900px] text-white flex overflow-hidden mx-auto rounded-xl bg-zinc-900 border-black border-2"
   >
     <div
-      class="flex-col overflow-hidden xl:min-h-[750px] xl:min-w-[1100px] lg:min-h-[600px] lg:min-w-[600px] justify-start bg-zinc-800 m-4 p-4 rounded-xl"
+      class="flex-col overflow-hidden xl:min-w-[80%] lg:min-w-[80%] justify-start bg-zinc-800 m-6 rounded-xl"
     >
       <strong
-        class="text-gray-200 flex font-extrabold p-2 border-b-2 border-zinc-600 self-center"
+        class="text-gray-200 flex font-extrabold p-4 border-b-2 border-zinc-600 self-center"
       >
         Template Preview
       </strong>
       <div
-        class="relative xl:min-h-[770px] rounded-xl bg-zinc-950 m-4 overflow-hidden"
+        class="relative xl:min-h-[770px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
         id="screen"
-        :style="{
-          backgroundImage: backgroundSettings.bgImage
-            ? `url(${backgroundSettings.bgImage})`
-            : 'none',
-          backgroundColor: backgroundSettings.bgColor,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }"
+        :style="
+          componentVisibility['Background']
+            ? {
+                backgroundImage: backgroundSettings.bgImage
+                  ? `url(${backgroundSettings.bgImage})`
+                  : 'none',
+                backgroundColor: backgroundSettings.bgColor,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }
+            : {}
+        "
       >
         <video
-          v-if="prewebinarSettings.mediaType === 'video'"
+          v-if="
+            prewebinarSettings.mediaType === 'video' &&
+            componentVisibility['Prewebinar']
+          "
           ref="mediaElement"
           :src="prewebinarSettings.mediaFile"
           @ended="isPlaying = false"
@@ -34,7 +41,10 @@
         ></video>
 
         <audio
-          v-else-if="prewebinarSettings.mediaType === 'audio'"
+          v-else-if="
+            prewebinarSettings.mediaType === 'audio' &&
+            componentVisibility['Prewebinar']
+          "
           ref="mediaElement"
           :src="prewebinarSettings.mediaFile"
           @ended="isPlaying = false"
@@ -44,13 +54,24 @@
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
         <div class="relative z-10 p-6 text-white">
-          <p :style="headlineStyle">{{ headlineSettings.text }}</p>
-          <p :style="subheadlineStyle">{{ subheadlineSettings.text }}</p>
-          <p :style="timertextStyle">{{ timertextSettings.text }}</p>
+          <p v-if="componentVisibility['Headline']" :style="headlineStyle">
+            {{ headlineSettings.text }}
+          </p>
+          <p
+            v-if="componentVisibility['Subheadline']"
+            :style="subheadlineStyle"
+          >
+            {{ subheadlineSettings.text }}
+          </p>
+          <p v-if="componentVisibility['Timertext']" :style="timertextStyle">
+            {{ timertextSettings.text }}
+          </p>
 
           <div class="flex gap-2 justify-center mt-4">
             <div
-              v-if="countdownSettings.time > 0"
+              v-if="
+                componentVisibility['Countdown'] && countdownSettings.time > 0
+              "
               :style="countdownContainerStyle"
             >
               <span :style="timerTextStyle" class="rounded-lg">
@@ -153,14 +174,14 @@
       </div>
     </div>
 
-    <div id="sidenav" class="p-2 rounded-xl">
+    <div id="sidenav" class="w-[18%] pr-1 py-4 flex flex-col gap-9">
       <div
-        class="flex-row overflow-hidden xl:min-h-[700px] xl:min-w-[300px] lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl justify-end"
+        class="flex-row overflow-hidden xl:min-h-[700px] xl:min-w-[300px] lg:min-h-[700px] lg:min-w-[245px] rounded-xl justify-end"
       >
         <button
           v-if="activeComponent"
           @click="backToSidebar"
-          class="flex overflow-hidden text-gray-200 justify-center rounded-xl p-4 font-bold"
+          class="flex overflow-hidden text-gray-200 justify-center rounded-xl py-2 font-bold"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -188,10 +209,51 @@
           <p
             v-for="comp in activeComponents"
             :key="comp"
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold cursor-pointer"
+            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold cursor-pointer justify-between"
             @click="toggleSettings(comp)"
           >
             {{ comp }}
+            <svg
+              v-if="componentVisibility[comp]"
+              @click.stop="toggleVisibility(comp)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-eye justify-end mr-4"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path
+                d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
+              />
+            </svg>
+            <svg
+              v-else
+              @click.stop="toggleVisibility(comp)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+              <path
+                d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"
+              />
+              <path d="M3 3l18 18" />
+            </svg>
           </p>
         </div>
 
@@ -219,6 +281,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
+import { useComponentStore } from "./stores/componentStore";
 import Background from "@/components/background.vue";
 import Headline from "@/components/headline.vue";
 import Subheadline from "@/components/subheadline.vue";
@@ -238,6 +301,19 @@ const activeComponents = [
 const activeComponent = ref(null);
 const dynamicComponent = ref(null);
 const countdownInterval = ref(null);
+
+const componentVisibility = ref({
+  Background: true,
+  Headline: true,
+  Subheadline: true,
+  Timertext: true,
+  Prewebinar: true,
+  Countdown: true,
+});
+
+const toggleVisibility = (comp) => {
+  componentVisibility.value[comp] = !componentVisibility.value[comp];
+};
 
 const componentSettings = ref({
   Headline: {
@@ -282,7 +358,7 @@ const componentSettings = ref({
     period: {
       fontFamily: "Arial",
       fontWeight: "Normal",
-      fontSize: 12,
+      fontSize: 10,
       fontColor: "#FFFFFF",
       bgColor: "#000000",
     },

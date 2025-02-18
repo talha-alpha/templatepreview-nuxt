@@ -8,7 +8,7 @@
         :key="side.key"
         class="flex gap-2 items-center bg-zinc-800 justify-between rounded-lg border-zinc-600 border-2"
       >
-        <label class="w-10 p-2 text-center text-sm">{{ side.label }}</label>
+        <label class="p-2 text-center text-sm w-[50%]">{{ side.label }}</label>
         <input
           type="number"
           :value="padding[side.key]"
@@ -18,7 +18,7 @@
               [side.key]: Number($event.target.value) || 0,
             })
           "
-          class="w-20 p-2 bg-zinc-900 rounded-r-lg outline-none text-center"
+          class="w-[50%] p-2 bg-zinc-900 rounded-r-lg outline-none text-center"
           placeholder="0"
           maxlength="3"
         />

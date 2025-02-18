@@ -1,34 +1,36 @@
 <!-- ColorPicker.vue -->
 <template>
-    <div class="flex gap-2 items-center">
-      <!-- Color picker -->
-      <input
-        type="color"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        class="w-10 h-10 rounded cursor-pointer bg-zinc-900"
-      />
-      <!-- HEX input -->
-      <div class="flex overflow-hidden justify-between border-zinc-600 border-2 rounded-lg">
-        <p class="flex overflow-hidden text-center mx-4 p-2">HEX</p>
-        <input
-          type="text"
-          :value="modelValue"
-          @input="$emit('update:modelValue', $event.target.value)"
-          class="font-mono p-2 bg-zinc-800 outline-none text-center"
-          placeholder="#FFFFFF"
-        />
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  defineProps({
-    modelValue: {
-      type: String,
-      default: "#FFFFFF",
-    },
-  });
-  defineEmits(["update:modelValue"]);
-  </script>
-  
+  <div class="flex overflow-hidden items-center">
+    <!-- Color picker -->
+    <input
+      type="color"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      class="w-[60px] h-9 rounded cursor-pointer bg-zinc-900 mr-4"
+    />
+    <!-- HEX input -->
+
+    <p
+      class="flex overflow-hidden text-center justify-center p-2 w-[80px] bg-zinc-950 rounded-l-lg outline-none border-zinc-600 border-2 border-r-0"
+    >
+      HEX
+    </p>
+    <input
+      type="text"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      class="font-mono bg-zinc-800 rounded-r-lg w-[150px] outline-none text-center py-2 border-zinc-600 border-2 border-l-0"
+      placeholder="#FFFFFF"
+    />
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  modelValue: {
+    type: String,
+    default: "#FFFFFF",
+  },
+});
+defineEmits(["update:modelValue"]);
+</script>

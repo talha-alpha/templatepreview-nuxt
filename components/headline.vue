@@ -5,6 +5,7 @@
     <h2 class="text-lg font-bold mb-6">Edit Headline Settings</h2>
 
     <ModulesTextAreaInput
+      class="mb-4"
       label="Text"
       :modelValue="localSettings.text"
       @update:modelValue="handleTextUpdate"
@@ -41,12 +42,10 @@
       label="Font Size"
       :modelValue="localSettings.fontSize"
       @update:modelValue="(v) => updateSetting('fontSize', v)"
-      :min="8"
-      :max="100"
     />
 
     <div class="mb-4">
-      <label class="flex overflow-hidden font-bold mb-1">Font Color</label>
+      <label class="flex items-center gap-2 w-full">Font Color</label>
       <ModulesColorPicker
         :modelValue="localSettings.fontColor"
         @update:modelValue="(v) => updateSetting('fontColor', v)"
@@ -55,7 +54,7 @@
 
     <div class="mb-4">
       <div class="flex justify-between">
-        <label class="flex overflow-hidden font-bold mb-1">BG Color</label>
+        <label class="flex items-center gap-2 w-full">BG Color</label>
         <ModulesButton
           variant="ghost"
           class="text-destructive hover:text-destructive cursor-pointer"

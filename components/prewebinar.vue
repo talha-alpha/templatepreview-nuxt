@@ -8,33 +8,67 @@
       <ModulesLabel class="flex overflow-hidden font-bold"
         >Pre-Webinar Media Type</ModulesLabel
       >
-      <select
-        v-model="mediaType"
-        class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
-      >
-        <option value="">Select Media Type</option>
-        <option value="audio">Audio</option>
-        <option value="video">Video</option>
-      </select>
+      <div class="relative">
+        <select
+          v-model="mediaType"
+          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
+        >
+          <option value="">Select Media Type</option>
+          <option value="audio">Audio</option>
+          <option value="video">Video</option>
+        </select>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M6 9l6 6l6 -6" />
+        </svg>
+      </div>
     </div>
 
     <div v-if="mediaType" class="mb-4">
       <ModulesLabel class="flex overflow-hidden font-bold"
         >Pre-Webinar Media File</ModulesLabel
       >
-      <select
-        v-model="selectedMedia"
-        class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
-      >
-        <option value="">Select Media File</option>
-        <option
-          v-for="media in mediaOptions"
-          :key="media.value"
-          :value="media.value"
+      <div class="relative">
+        <select
+          v-model="selectedMedia"
+          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
         >
-          {{ media.label }}
-        </option>
-      </select>
+          <option value="">Select Media File</option>
+          <option
+            v-for="media in mediaOptions"
+            :key="media.value"
+            :value="media.value"
+          >
+            {{ media.label }}
+          </option>
+        </select>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M6 9l6 6l6 -6" />
+        </svg>
+      </div>
     </div>
 
     <ModulesButton
@@ -118,3 +152,8 @@ watch(
   { deep: true }
 );
 </script>
+<style scoped>
+select {
+  appearance: none;
+}
+</style>

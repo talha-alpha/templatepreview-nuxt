@@ -3,14 +3,30 @@
     class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] rounded-xl bg-background text-sm mb-2 mt-4"
   >
     <h4 class="text-lg font-bold mb-6">Background Type</h4>
-
-    <select
-      v-model="backgroundType"
-      class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2 mb-4"
-    >
-      <option value="color">Color</option>
-      <option value="image">Image</option>
-    </select>
+    <div class="relative mb-2">
+      <select
+        v-model="backgroundType"
+        class="w-full appearance-none rounded-lg bg-zinc-800 p-3 pr-10 outline-none border-zinc-600 border-2"
+      >
+        <option value="color">Color</option>
+        <option value="image">Image</option>
+      </select>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M6 9l6 6l6 -6" />
+      </svg>
+    </div>
 
     <div v-if="backgroundType === 'color'" class="mb-4">
       <div class="flex justify-between">
@@ -134,5 +150,9 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 input[type="color"]::-webkit-color-swatch {
   border: none;
+}
+
+select {
+  appearance: none;
 }
 </style>
