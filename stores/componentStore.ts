@@ -72,15 +72,15 @@ export const useComponentStore = defineStore("component", {
     },
   }),
   actions: {
-    toggleVisibility(comp: string) {
-      this.visibility[comp] = !this.visibility[comp];
-    },
-    updateSettings(component: string, newSettings: object) {
-      this.settings[component] = {
-        ...this.settings[component],
-        ...newSettings,
-      };
-    },
+    // toggleVisibility(comp: string) {
+    //   this.visibility[comp] = !this.visibility[comp];
+    // },
+    // updateSettings(component: string, newSettings: object) {
+    //   this.settings[component] = {
+    //     ...this.settings[component],
+    //     ...newSettings,
+    //   };
+    // },
     decrementCountdown() {
       if (this.settings.Countdown.time > 0) {
         this.settings.Countdown.time--;

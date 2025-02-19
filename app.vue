@@ -1,6 +1,6 @@
 <template>
   <div
-    class="xl:min-w-full lg:max-w-[900px] text-white flex overflow-hidden mx-auto rounded-xl bg-zinc-900 border-black border-2"
+    class="xl:max-w-full lg:max-w-full xl:max-h-full lg:max-h-full text-white flex overflow-hidden mx-auto rounded-xl bg-zinc-900 border-black border-2"
   >
     <div
       class="flex-col overflow-hidden xl:min-w-[80%] lg:min-w-[80%] justify-start bg-zinc-800 m-6 rounded-xl"
@@ -10,9 +10,9 @@
       >
         Template Preview
       </strong>
+
       <div
-        class="relative xl:min-h-[770px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
-        id="screen"
+        class="relative xl:min-h-[750px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
         :style="
           componentVisibility['Background']
             ? {
@@ -174,9 +174,9 @@
       </div>
     </div>
 
-    <div id="sidenav" class="w-[18%] pr-1 py-4 flex flex-col gap-9">
+    <div id="sidenav" class="w-[18%] pr-1 py-4 mr-8 flex flex-col gap-9">
       <div
-        class="flex-row overflow-hidden xl:min-h-[700px] xl:min-w-[300px] lg:min-h-[700px] lg:min-w-[245px] rounded-xl justify-end"
+        class="flex-row overflow-hidden xl:min-h-[700px] xl:min-w-[25%] lg:min-h-[700px] lg:min-w-[25%] rounded-xl justify-end"
       >
         <button
           v-if="activeComponent"
@@ -209,7 +209,7 @@
           <p
             v-for="comp in activeComponents"
             :key="comp"
-            class="flex overflow-hidden mt-4 text-gray-200 border-b-2 border-zinc-600 py-2 font-bold cursor-pointer justify-between"
+            class="flex overflow-hidden text-gray-200 border-b-2 border-zinc-600 py-4 font-bold cursor-pointer justify-between hover:bg-zinc-950 rounded-lg rounded-b-none"
             @click="toggleSettings(comp)"
           >
             {{ comp }}
@@ -245,7 +245,7 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off justify-end mr-4"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
@@ -267,10 +267,9 @@
           />
         </div>
 
-        <!-- Save Button -->
         <button
           v-if="!activeComponent"
-          class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-600 justify-center rounded-xl p-2 font-bold w-full"
+          class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-400 justify-center rounded-xl py-2 font-bold w-full"
         >
           Save Settings
         </button>

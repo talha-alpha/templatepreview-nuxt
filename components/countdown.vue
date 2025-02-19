@@ -1,45 +1,41 @@
 <template>
   <div
-    class="flex flex-col min-h-[700px] min-w-[300px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm"
+    class="flex flex-col min-h-[700px] min-w-[300px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm mr-4"
   >
     <h2 class="text-lg font-bold mb-4">Set Duration</h2>
 
-    <div class="mb-8">
+    <div class="mr-2">
       <ModulesLabel class="flex overflow-hidden font-bold mb-2">
         Duration (Minutes)
       </ModulesLabel>
-      <div class="flex gap-4">
-        <ModulesNumberInput
-          :modelValue="localSettings.duration"
-          @update:modelValue="(v) => updateSetting('duration', v)"
-          :min="1"
-          :max="30"
-          placeholder="Max 30"
-          class="w-full text-white rounded-lg outline-none bg-none"
-        />
-        <span
-          class="flex items-center rounded-lg bg-zinc-800 p-2 border-zinc-600 border-2"
-        >
-          MIN
-        </span>
-      </div>
+      <ModulesNumberInput
+        :modelValue="localSettings.duration"
+        @update:modelValue="(v) => updateSetting('duration', v)"
+        :min="1"
+        :max="2"
+        placeholder="Max 30"
+        class="w-full text-white rounded-lg outline-none"
+      />
+      <p class="mb-8 mt-1 text-sm justify-start">Max 30 minutes</p>
     </div>
 
     <h2 class="text-lg font-bold mb-2">Edit Settings</h2>
 
-    <div class="mb-4">
+    <div class="mb-4 mr-2">
       <ModulesLabel class="flex overflow-hidden font-bold">
         Choose Element To Adjust
       </ModulesLabel>
       <ModulesSelectInput
-        :modelValue="localSettings.selectedElement"
+        :modelValue="localSettings.selectedElement || 'Select Element'"
         @update:modelValue="updateSelectedElement"
         :options="elementOptions"
-        placeholder="Period Settings"
       />
     </div>
 
-    <div v-if="localSettings.selectedElement === 'Period Settings'">
+    <div
+      v-if="localSettings.selectedElement === 'Period Settings'"
+      class="mr-1"
+    >
       <h3 class="text-lg font-bold mb-4">Period Settings</h3>
       <div class="mb-4">
         <ModulesLabel class="flex overflow-hidden font-bold">
@@ -102,7 +98,10 @@
       </div>
     </div>
 
-    <div v-else-if="localSettings.selectedElement === 'Timer Settings'">
+    <div
+      v-else-if="localSettings.selectedElement === 'Timer Settings'"
+      class="mr-2"
+    >
       <h3 class="text-lg font-bold mb-4">Timer Settings</h3>
       <div class="mb-4">
         <ModulesLabel class="flex overflow-hidden font-bold">
@@ -166,7 +165,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
       @click="emitUpdate"
     >
       Update Settings
@@ -187,7 +186,7 @@ const props = defineProps({
 
 const localSettings = ref({
   duration: props.settings.duration || 1,
-  selectedElement: props.settings.selectedElement || "Period Settings",
+  selectedElement: props.settings.selectedElement || "Select Element",
   period: {
     fontFamily: props.settings.period?.fontFamily || "Arial",
     fontWeight: props.settings.period?.fontWeight || "Normal",

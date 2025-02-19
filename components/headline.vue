@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col min-h-[600px] min-w-[200px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl text-sm"
+    class="flex flex-col min-h-[600px] min-w-[200px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl text-sm mr-4"
   >
     <h2 class="text-lg font-bold mb-6">Edit Headline Settings</h2>
 
@@ -75,7 +75,7 @@
     />
 
     <button
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg mt-4"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg mt-4"
       @click="emitUpdate"
     >
       Update Settings

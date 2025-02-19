@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-4 rounded-xl lg:min-h-[700px] lg:min-w-[220px] lg:p-2 bg-background text-sm"
+    class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-4 rounded-xl lg:min-h-[700px] lg:min-w-[220px] lg:p-2 bg-background text-sm mr-4"
   >
     <h2 class="text-lg font-bold mb-6">Pre-Webinar Media</h2>
 
@@ -72,7 +72,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings

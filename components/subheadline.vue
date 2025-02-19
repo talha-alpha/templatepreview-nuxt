@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col min-h-[600px] min-w-[200px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl text-sm"
+    class="flex flex-col min-h-[600px] min-w-[200px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl text-sm mr-4"
   >
     <h2 class="text-lg font-bold mb-6">Edit {{ title }} Settings</h2>
 
@@ -37,8 +37,8 @@
       class="mb-4"
       label="Font Size"
       v-model="localSettings.fontSize"
-      :min="8"
-      :max="100"
+      :min="1"
+      :max="3"
     />
 
     <div class="mb-4">
@@ -67,7 +67,7 @@
     />
 
     <button
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg mt-4"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg mt-4"
       @click="updateSettings"
     >
       Update Settings

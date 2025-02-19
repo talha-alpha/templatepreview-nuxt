@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col min-h-[600px] min-w-[200px] p-4 md:min-h-[700px] md:min-w-[220px] md:p-2 rounded-xl text-sm"
+    class="flex flex-col min-h-[600px] min-w-[200px] p-4 md:min-h-[700px] md:min-w-[220px] md:p-2 rounded-xl text-sm mr-4"
   >
     <h2 class="text-lg font-bold mb-6">Edit Timer Text settings</h2>
 
@@ -94,7 +94,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings

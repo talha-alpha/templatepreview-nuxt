@@ -1,4 +1,3 @@
-<!-- PaddingControl.vue -->
 <template>
   <div>
     <label class="flex overflow-hidden font-bold mb-1">Padding</label>
@@ -12,15 +11,9 @@
         <input
           type="number"
           :value="padding[side.key]"
-          @input="
-            $emit('update:padding', {
-              ...padding,
-              [side.key]: Number($event.target.value) || 0,
-            })
-          "
+          @input="handleInput($event, side.key)"
           class="w-[50%] p-2 bg-zinc-900 rounded-r-lg outline-none text-center"
           placeholder="0"
-          maxlength="3"
         />
       </div>
     </div>
@@ -31,11 +24,21 @@
 const props = defineProps({
   padding: { type: Object, required: true },
 });
+
 const emit = defineEmits(["update:padding"]);
+
 const sides = [
   { label: "Top", key: "top" },
   { label: "Right", key: "right" },
   { label: "Bottom", key: "bottom" },
   { label: "Left", key: "left" },
 ];
+
+const handleInput = (event, key) => {
+  let value = event.target.value.slice(0, 3); // Limit input to 3 digits
+  value = Number(value) || 0; // Ensure it's a number
+  event.target.value = value; // Update input field
+
+  emit("update:padding", { ...props.padding, [key]: value });
+};
 </script>

@@ -6,7 +6,7 @@
       type="color"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="w-[60px] h-9 rounded cursor-pointer bg-zinc-900 mr-4"
+      class="w-[50px] h-9 rounded cursor-pointer bg-zinc-900 mr-4"
     />
     <!-- HEX input -->
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] rounded-xl bg-background text-sm mb-2 mt-4"
+    class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] rounded-xl bg-background text-sm mb-2 mr-4 mt-4"
   >
     <h4 class="text-lg font-bold mb-6">Background Type</h4>
     <div class="relative mb-2">
@@ -76,7 +76,7 @@
     </div>
 
     <ModulesButton
-      class="bg-blue-500 hover:bg-blue-600 text-white p-2 font-bold rounded-lg text-center"
+      class="bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings
