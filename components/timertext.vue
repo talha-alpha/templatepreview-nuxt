@@ -4,7 +4,7 @@
   >
     <h2 class="text-lg font-bold mb-6">Edit Timer Text settings</h2>
 
-    <div class="flex-col mb-4 overflow-hidden">
+    <div class="flex-col mb-2 overflow-hidden">
       <ModulesLabel class="flex overflow-hidden font-bold"></ModulesLabel>
       <ModulesTextAreaInput
         :modelValue="localSettings.text"
@@ -14,7 +14,9 @@
     </div>
 
     <div class="flex-col mb-4 overflow-hidden">
-      <ModulesLabel class="flex overflow-hidden font-bold">Align</ModulesLabel>
+      <ModulesLabel class="flex overflow-hidden font-bold mb-1"
+        >Align</ModulesLabel
+      >
       <ModulesAlignmentSelector
         :modelValue="localSettings.alignment"
         @update:modelValue="(v) => updateSetting('alignment', v)"
@@ -73,7 +75,7 @@
         >
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
           @click="updateSetting('bgColor', 'transparent')"
         >
           Remove

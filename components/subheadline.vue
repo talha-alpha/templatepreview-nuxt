@@ -5,6 +5,7 @@
     <h2 class="text-lg font-bold mb-6">Edit {{ title }} Settings</h2>
 
     <ModulesTextAreaInput
+      class="mb-1"
       label="Text"
       :modelValue="localSettings.text"
       @update:modelValue="handleTextUpdate"
@@ -42,16 +43,16 @@
     />
 
     <div class="mb-4">
-      <label class="flex overflow-hidden font-bold mb-1">Font Color</label>
+      <label class="flex overflow-hidden font-bold">Font Color</label>
       <ModulesColorPicker v-model="localSettings.fontColor" />
     </div>
 
     <div class="mb-4">
       <div class="flex justify-between">
-        <label class="flex overflow-hidden font-bold mb-1">BG Color</label>
+        <label class="flex overflow-hidden font-bold">BG Color</label>
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
           @click="resetBgColor"
         >
           Remove
@@ -61,7 +62,6 @@
     </div>
 
     <ModulesPaddingControl
-      class="mb-4"
       :padding="localSettings.padding"
       @update:padding="(newPadding) => (localSettings.padding = newPadding)"
     />
@@ -125,7 +125,7 @@ const alignmentOptions = [
     value: "left",
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-align-center"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M8 12l8 0" /><path d="M6 18l12 0" /></svg>',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-align-center self-center"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M8 12l8 0" /><path d="M6 18l12 0" /></svg>',
     value: "center",
   },
   {

@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex flex-col min-h-[700px] min-w-[300px] p-4 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm mr-4"
+    class="flex flex-col min-h-[700px] min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm mr-4"
   >
     <h2 class="text-lg font-bold mb-4">Set Duration</h2>
 
-    <div class="mr-2">
+    <div>
       <ModulesLabel class="flex overflow-hidden font-bold mb-2">
         Duration (Minutes)
       </ModulesLabel>
@@ -21,7 +21,7 @@
 
     <h2 class="text-lg font-bold mb-2">Edit Settings</h2>
 
-    <div class="mb-4 mr-2">
+    <div class="mb-4">
       <ModulesLabel class="flex overflow-hidden font-bold">
         Choose Element To Adjust
       </ModulesLabel>
@@ -32,10 +32,7 @@
       />
     </div>
 
-    <div
-      v-if="localSettings.selectedElement === 'Period Settings'"
-      class="mr-1"
-    >
+    <div v-if="localSettings.selectedElement === 'Period Settings'">
       <h3 class="text-lg font-bold mb-4">Period Settings</h3>
       <div class="mb-4">
         <ModulesLabel class="flex overflow-hidden font-bold">
@@ -81,11 +78,11 @@
         />
       </div>
       <div class="mb-4">
-        <div class="flex justify-between">
+        <div class="flex overflow-hidden justify-between">
           <label class="flex overflow-hidden font-bold"> BG Color </label>
           <ModulesButton
             variant="ghost"
-            class="text-destructive hover:text-destructive cursor-pointer"
+            class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
             @click="resetBgColor"
           >
             Remove
@@ -98,10 +95,7 @@
       </div>
     </div>
 
-    <div
-      v-else-if="localSettings.selectedElement === 'Timer Settings'"
-      class="mr-2"
-    >
+    <div v-else-if="localSettings.selectedElement === 'Timer Settings'">
       <h3 class="text-lg font-bold mb-4">Timer Settings</h3>
       <div class="mb-4">
         <ModulesLabel class="flex overflow-hidden font-bold">
@@ -151,7 +145,7 @@
           <label class="flex overflow-hidden font-bold"> BG Color </label>
           <ModulesButton
             variant="ghost"
-            class="text-destructive hover:text-destructive cursor-pointer"
+            class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
             @click="resetBgColor"
           >
             Remove

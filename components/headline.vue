@@ -5,7 +5,7 @@
     <h2 class="text-lg font-bold mb-6">Edit Headline Settings</h2>
 
     <ModulesTextAreaInput
-      class="mb-4"
+      class="mb-1"
       label="Text"
       :modelValue="localSettings.text"
       @update:modelValue="handleTextUpdate"
@@ -57,7 +57,7 @@
         <label class="flex items-center gap-2 w-full">BG Color</label>
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
           @click="updateSetting('bgColor', 'transparent')"
         >
           Remove

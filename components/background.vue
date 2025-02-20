@@ -6,7 +6,7 @@
     <div class="relative mb-2">
       <select
         v-model="backgroundType"
-        class="w-full appearance-none rounded-lg bg-zinc-800 p-3 pr-10 outline-none border-zinc-600 border-2"
+        class="w-full appearance-none rounded-lg bg-neutral-800 p-3 pr-10 outline-none border-neutral-600 border-2"
       >
         <option value="color">Color</option>
         <option value="image">Image</option>
@@ -35,7 +35,7 @@
         >
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
           @click="handleColorChange('bgColor', 'transparent')"
         >
           Remove
@@ -47,14 +47,14 @@
       />
     </div>
 
-    <div v-if="backgroundType === 'image'" class="mb-4">
+    <div v-if="backgroundType === 'image'" class="relative mb-4">
       <ModulesLabel class="flex overflow-hidden font-bold mb-2"
         >Background Image</ModulesLabel
       >
       <div class="flex flex-col gap-2">
         <select
           v-model="selectedImage"
-          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2 mb-2"
+          class="w-full bg-neutral-800 p-2 rounded-lg outline-none border-neutral-600 border-2 mb-2"
         >
           <option value="">Select an image</option>
           <option
@@ -65,12 +65,27 @@
             {{ image.label }}
           </option>
         </select>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="absolute right-4 top-12 transform -translate-y-1/2 pointer-events-none"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M6 9l6 6l6 -6" />
+        </svg>
 
         <img
           v-if="selectedImage"
           :src="selectedImage"
           alt="Selected Background"
-          class="w-full h-32 object-cover rounded-lg border-zinc-600 border-2 mb-2"
+          class="w-full h-32 object-cover rounded-lg border-neutral-600 border-2 mb-2"
         />
       </div>
     </div>
@@ -87,7 +102,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import bg1 from "./img/bg1.jpg";
-import bg2 from "./img/bg2.jpeg";
+import bg2 from "./img/bg2.jpg";
 import bg3 from "./img/bg3.jpeg";
 
 const emit = defineEmits(["update"]);

@@ -6,7 +6,7 @@
       v-model.number="value"
       :min="min"
       :max="max"
-      class="w-full bg-zinc-800 p-3 rounded-lg outline-none border-zinc-600 border-2"
+      class="w-full bg-neutral-800 p-3 rounded-lg outline-none border-neutral-700 border-2"
       @input="limitDigits"
     />
   </div>

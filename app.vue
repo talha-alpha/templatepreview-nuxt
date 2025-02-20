@@ -1,9 +1,9 @@
 <template>
   <div
-    class="xl:max-w-full lg:max-w-full xl:max-h-full lg:max-h-full text-white flex overflow-hidden mx-auto rounded-xl bg-zinc-900 border-black border-2"
+    class="xl:w-full lg:w-full xl:h-screen h-screen text-white flex overflow-hidden mx-auto bg-neutral-900 border-black border-2"
   >
     <div
-      class="flex-col overflow-hidden xl:min-w-[80%] lg:min-w-[80%] justify-start bg-zinc-800 m-6 rounded-xl"
+      class="flex-col overflow-hidden xl:min-w-[80%] lg:min-w-[80%] max-h-screen justify-start bg-neutral-800 m-6 rounded-xl"
     >
       <strong
         class="text-gray-200 flex font-extrabold p-4 border-b-2 border-zinc-600 self-center"
@@ -181,7 +181,7 @@
         <button
           v-if="activeComponent"
           @click="backToSidebar"
-          class="flex overflow-hidden text-gray-200 justify-center rounded-xl py-2 font-bold"
+          class="flex overflow-hidden text-white justify-center rounded-xl py-2 font-bold"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -205,11 +205,11 @@
 
         <!-- Sidebar Menu -->
         <div v-if="!activeComponent">
-          <h2 class="text-lg font-bold my-2 text-gray-200">Template</h2>
+          <h2 class="text-lg font-bold my-2 text-white mb-6">Template</h2>
           <p
             v-for="comp in activeComponents"
             :key="comp"
-            class="flex overflow-hidden text-gray-200 border-b-2 border-zinc-600 py-4 font-bold cursor-pointer justify-between hover:bg-zinc-950 rounded-lg rounded-b-none"
+            class="flex overflow-hidden text-white border-b-2 border-zinc-600 py-4 font-bold cursor-pointer justify-between hover:text-stone-400 duration-300 rounded-lg rounded-b-none"
             @click="toggleSettings(comp)"
           >
             {{ comp }}
@@ -269,7 +269,7 @@
 
         <button
           v-if="!activeComponent"
-          class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-400 justify-center rounded-xl py-2 font-bold w-full"
+          class="flex overflow-hidden mt-12 text-gray-200 bg-blue-500 hover:bg-blue-400 justify-center duration-300 rounded-xl py-2 font-bold w-full"
         >
           Save Settings
         </button>
@@ -364,7 +364,7 @@ const componentSettings = ref({
     timer: {
       fontFamily: "Arial",
       fontWeight: "Bold",
-      fontSize: 48,
+      fontSize: 53,
       fontColor: "#FFFFFF",
       bgColor: "transparent",
     },

@@ -5,14 +5,14 @@
       <div
         v-for="side in sides"
         :key="side.key"
-        class="flex gap-2 items-center bg-zinc-800 justify-between rounded-lg border-zinc-600 border-2"
+        class="flex gap-2 items-center bg-neutral-800 justify-between rounded-lg border-neutral-700 border-2"
       >
         <label class="p-2 text-center text-sm w-[50%]">{{ side.label }}</label>
         <input
           type="number"
           :value="padding[side.key]"
           @input="handleInput($event, side.key)"
-          class="w-[50%] p-2 bg-zinc-900 rounded-r-lg outline-none text-center"
+          class="w-[50%] p-2 bg-neutral-900 rounded-r-lg outline-none text-center"
           placeholder="0"
         />
       </div>

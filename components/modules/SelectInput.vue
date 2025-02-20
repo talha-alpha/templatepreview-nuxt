@@ -4,7 +4,7 @@
     <div class="relative">
       <select
         v-model="selected"
-        class="w-full appearance-none rounded-lg bg-zinc-800 p-3 pr-10 outline-none border-zinc-600 border-2"
+        class="w-full appearance-none rounded-lg bg-neutral-800 p-3 pr-10 outline-none border-neutral-700 border-2"
       >
         <option v-for="option in options" :key="option" :value="option">
           {{ option }}

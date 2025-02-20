@@ -1,9 +1,11 @@
 import plugin from "tailwindcss/plugin";
 
 module.exports = {
-  // ... other config options
   theme: {
     extend: {
+      fontFamily: {
+        fantasy: ["Arial", "sans-serif"], // Correct way to define a font
+      },
       zIndex: {
         0: 0,
         10: 10,
@@ -11,10 +13,11 @@ module.exports = {
     },
   },
   plugins: [
-    plugin(function ({ addBase }) {
+    plugin(function ({ addBase, theme }) {
       addBase({
         body: {
           backgroundColor: "black",
+          fontFamily: theme("fontFamily.fantasy"), // Correct way to apply font
         },
       });
     }),
