@@ -12,7 +12,7 @@
       </strong>
 
       <div
-        class="relative xl:min-h-[790px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
+        class="relative xl:min-h-[790px] sm:max-h-[700px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
         :style="
           componentVisibility['Background']
             ? {
@@ -67,23 +67,41 @@
             {{ timertextSettings.text }}
           </p>
 
-          <div class="flex gap-2 justify-center mt-4">
+          <div class="flex">
             <div
               v-if="
                 componentVisibility['Countdown'] && countdownSettings.time > 0
               "
               :style="countdownContainerStyle"
+              class="flex overflow-hidden justify-center gap-3 rounded-lg"
             >
-              <span :style="timerTextStyle" class="rounded-lg">
-                {{ formatTime(countdownSettings.time) }}
-              </span>
-              <div class="flex justify-around gap-2">
-                <span :style="periodTextStyle" class="p-2 rounded-lg"
-                  >MINUTES</span
+              <div class="w-full flex-col rounded-lg">
+                <div
+                  :style="timerTextStyle"
+                  class="rounded-lg px-5 rounded-b-none border-none"
                 >
-                <span :style="periodTextStyle" class="p-2 rounded-lg"
-                  >SECONDS</span
+                  {{ formatTime(countdownSettings.time).minutes }}
+                </div>
+                <p
+                  :style="periodTextStyle"
+                  class="p-1 rounded-lg text-center rounded-t-none"
                 >
+                  MINUTES
+                </p>
+              </div>
+              <div class="w-full flex-col rounded-lg">
+                <div
+                  :style="timerTextStyle"
+                  class="rounded-lg px-5 rounded-b-none border-none"
+                >
+                  {{ formatTime(countdownSettings.time).seconds }}
+                </div>
+                <p
+                  :style="periodTextStyle"
+                  class="p-1 rounded-lg text-center rounded-t-none"
+                >
+                  SECONDS
+                </p>
               </div>
             </div>
           </div>
@@ -94,7 +112,7 @@
           >
             <button
               @click="togglePlay"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"
+              class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded flex items-center gap-2"
             >
               <svg
                 v-if="isPlaying"
@@ -135,7 +153,7 @@
           >
             <button
               @click="togglePlay"
-              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"
+              class="bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded flex items-center gap-2"
             >
               <svg
                 v-if="isPlaying"
@@ -174,7 +192,7 @@
       </div>
     </div>
 
-    <div id="sidenav" class="w-[18%] pr-1 py-4 mr-8 flex flex-col gap-9">
+    <div id="sidenav" class="w-[18%] pr-1 py-4 mr-4 flex flex-col gap-9">
       <div
         class="flex-row overflow-hidden xl:min-h-[700px] xl:min-w-[25%] lg:min-h-[700px] lg:min-w-[25%] rounded-xl justify-end"
       >
@@ -287,7 +305,7 @@ import Subheadline from "@/components/subheadline.vue";
 import Timertext from "@/components/timertext.vue";
 import Prewebinar from "@/components/prewebinar.vue";
 import Countdown from "@/components/countdown.vue";
-
+import bg1 from "./components/img/bg1.jpg";
 const activeComponents = [
   "Background",
   "Headline",
@@ -321,7 +339,7 @@ const componentSettings = ref({
     fontFamily: "Arial",
     fontWeight: "Bold",
     fontSize: 40,
-    fontColor: "#FFFFFF",
+    fontColor: "#ffffff",
     bgColor: "transparent",
     padding: { top: 150, right: 10, bottom: 10, left: 10 },
   },
@@ -331,7 +349,7 @@ const componentSettings = ref({
     fontFamily: "Cambria",
     fontWeight: "Normal",
     fontSize: 28,
-    fontColor: "#FFFFFF",
+    fontColor: "#ffffff",
     bgColor: "transparent",
     padding: { top: 5, right: 5, bottom: 5, left: 5 },
   },
@@ -341,7 +359,7 @@ const componentSettings = ref({
     fontFamily: "Arial",
     fontWeight: "Normal",
     fontSize: 20,
-    fontColor: "#FFFFF0",
+    fontColor: "#ffffff",
     bgColor: "transparent",
     padding: { top: 5, right: 5, bottom: 5, left: 5 },
   },
@@ -356,21 +374,21 @@ const componentSettings = ref({
     selectedElement: "timer",
     period: {
       fontFamily: "Arial",
-      fontWeight: "Normal",
+      fontWeight: "Bold",
       fontSize: 10,
-      fontColor: "#FFFFFF",
+      fontColor: "#ffffff",
       bgColor: "#000000",
     },
     timer: {
       fontFamily: "Arial",
       fontWeight: "Bold",
-      fontSize: 53,
-      fontColor: "#FFFFFF",
-      bgColor: "transparent",
+      fontSize: 40,
+      fontColor: "#ffffff",
+      bgColor: "#ff2424",
     },
     bgColor: "transparent",
   },
-  Background: { bgColor: "#121212", bgImage: null },
+  Background: { bgColor: "#000000", bgImage: bg1 },
 });
 
 const headlineSettings = computed(() => componentSettings.value.Headline);
@@ -424,12 +442,14 @@ const getTextStyle = (settings) => ({
 });
 
 const formatTime = (timeInSeconds) => {
-  if (timeInSeconds == null || timeInSeconds < 0) return "00  00";
+  if (timeInSeconds == null || timeInSeconds < 0)
+    return { minutes: "00", seconds: "00" };
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds % 60;
-  return `${minutes.toString().padStart(2, "0")}  ${seconds
-    .toString()
-    .padStart(2, "0")}`;
+  return {
+    minutes: minutes.toString().padStart(2, "0"),
+    seconds: seconds.toString().padStart(2, "0"),
+  };
 };
 
 const getComponent = (name) => {

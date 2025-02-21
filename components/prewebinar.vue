@@ -11,7 +11,7 @@
       <div class="relative">
         <select
           v-model="mediaType"
-          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-neutral-600 border-[1px]"
+          class="w-full bg-zinc-800 p-3 rounded-lg outline-none border-neutral-600 border-[1px]"
         >
           <option value="">Select Media Type</option>
           <option value="audio">Audio</option>
@@ -42,7 +42,7 @@
       <div class="relative">
         <select
           v-model="selectedMedia"
-          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-neutral-600 border-[1px]"
+          class="w-full bg-zinc-800 p-3 rounded-lg outline-none border-neutral-600 border-[1px]"
         >
           <option value="">Select Media File</option>
           <option

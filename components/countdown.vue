@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col min-h-[700px] min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm mr-4"
+    class="flex flex-col min-h-[700px] min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm"
   >
     <h2 class="text-lg font-semibold mb-4">Set Duration</h2>
 
@@ -26,9 +26,10 @@
         Choose Element To Adjust
       </ModulesLabel>
       <ModulesSelectInput
-        :modelValue="localSettings.selectedElement || 'Select Element'"
+        :modelValue="localSettings.selectedElement || ''"
         @update:modelValue="updateSelectedElement"
         :options="elementOptions"
+        placeholder="Select Element"
       />
     </div>
 
@@ -184,60 +185,53 @@ const props = defineProps({
 
 const localSettings = ref({
   duration: props.settings.duration || 1,
-  selectedElement: props.settings.selectedElement || "Select Element",
+  selectedElement: props.settings.selectedElement || "",
   period: {
     fontFamily: props.settings.period?.fontFamily || "Arial",
     fontWeight: props.settings.period?.fontWeight || "Normal",
     fontSize: props.settings.period?.fontSize || 32,
-    fontColor: props.settings.period?.fontColor || "#FFFFFF",
+    fontColor: props.settings.period?.fontColor || "#ffffff",
     bgColor: props.settings.period?.bgColor || "transparent",
   },
   timer: {
     fontFamily: props.settings.timer?.fontFamily || "Arial",
     fontWeight: props.settings.timer?.fontWeight || "Normal",
     fontSize: props.settings.timer?.fontSize || 32,
-    fontColor: props.settings.timer?.fontColor || "#FFFFFF",
-    bgColor: props.settings.timer?.bgColor || "transparent",
+    fontColor: props.settings.timer?.fontColor || "#000000",
+    bgColor: props.settings.timer?.bgColor || "#ff2424",
   },
 });
 
-// Options for the select input
 const elementOptions = ["Period Settings", "Timer Settings"];
 const fontOptions = ["Arial", "Cambria", "Courier New", "Cursive", "Fantasy"];
 const fontWeightOptions = ["Normal", "Bold"];
 
-// Helper: emit updated settings to parent
 const emitUpdate = () => {
   emit("update", { ...localSettings.value });
 };
 
-// Generic update function (for properties like duration)
 const updateSetting = (key, value) => {
   localSettings.value[key] = value;
   emitUpdate();
 };
 
-// Update period settings
 const updatePeriodSetting = (key, value) => {
   localSettings.value.period[key] = value;
   console.log(`Updated period setting: ${key} = ${value}`);
   emitUpdate();
 };
 
-// Update timer settings
 const updateTimerSetting = (key, value) => {
   localSettings.value.timer[key] = value;
   console.log(`Updated timer setting: ${key} = ${value}`);
   emitUpdate();
 };
 
-// Update the selected element
 const updateSelectedElement = (value) => {
   localSettings.value.selectedElement = value;
   emitUpdate();
 };
 
-// Reset BG Color for the currently active element
 const resetBgColor = () => {
   if (localSettings.value.selectedElement === "Period Settings") {
     localSettings.value.period.bgColor = "transparent";
@@ -249,7 +243,6 @@ const resetBgColor = () => {
   emitUpdate();
 };
 
-// Watch for prop changes and update local state (deep merge)
 watch(
   () => props.settings,
   (newSettings) => {
@@ -269,12 +262,11 @@ watch(
   { deep: true }
 );
 
-// Ensure the selected element remains valid
 watch(
   () => localSettings.value.selectedElement,
   (newElement) => {
     if (!elementOptions.includes(newElement)) {
-      localSettings.value.selectedElement = "Period Settings"; // fallback
+      localSettings.value.selectedElement = "Period Settings";
     }
   }
 );

@@ -20,7 +20,7 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="font-mono bg-neutral-800 rounded-r-lg w-[150px] outline-none text-center py-2 border-neutral-600 border-[1px] border-l-0"
-      placeholder="#FFFFFF"
+      placeholder="#ffffff"
     />
   </div>
 </template>
