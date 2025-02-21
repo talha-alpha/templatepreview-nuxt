@@ -1,12 +1,12 @@
 <!-- TextAreaInput.vue -->
 <template>
   <div>
-    <label class="flex overflow-hidden font-bold mb-1">{{ label }}</label>
+    <label class="flex overflow-hidden font-semibold mb-1">{{ label }}</label>
     <textarea
       :value="modelValue"
       @input="onInput"
       :placeholder="placeholder"
-      class="w-full bg-neutral-800 p-2 rounded-lg outline-none text-sm border-neutral-700 border-2"
+      class="w-full bg-neutral-800 p-2 rounded-lg outline-none text-sm border-neutral-600 border-[1px]"
     ></textarea>
   </div>
 </template>

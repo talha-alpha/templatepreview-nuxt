@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-around bg-neutral-800 p-1 rounded-lg border-neutral-700 border-2"
+    class="flex justify-around bg-neutral-800 p-1 rounded-lg border-neutral-600 border-[1px]"
   >
     <button
       v-for="option in options"

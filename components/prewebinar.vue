@@ -5,13 +5,13 @@
     <h2 class="text-lg font-bold mb-6">Pre-Webinar Media</h2>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Pre-Webinar Media Type</ModulesLabel
       >
       <div class="relative">
         <select
           v-model="mediaType"
-          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
+          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-neutral-600 border-[1px]"
         >
           <option value="">Select Media Type</option>
           <option value="audio">Audio</option>
@@ -36,13 +36,13 @@
     </div>
 
     <div v-if="mediaType" class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Pre-Webinar Media File</ModulesLabel
       >
       <div class="relative">
         <select
           v-model="selectedMedia"
-          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-zinc-600 border-2"
+          class="w-full bg-zinc-800 p-2 rounded-lg outline-none border-neutral-600 border-[1px]"
         >
           <option value="">Select Media File</option>
           <option
@@ -72,7 +72,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-semibold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings

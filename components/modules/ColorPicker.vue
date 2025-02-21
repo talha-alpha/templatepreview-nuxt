@@ -11,7 +11,7 @@
     <!-- HEX input -->
 
     <p
-      class="flex overflow-hidden text-center justify-center p-2 w-[80px] bg-neutral-900 rounded-l-lg outline-none border-neutral-700 border-2 border-r-0"
+      class="flex overflow-hidden text-center justify-center p-2 w-[80px] bg-neutral-900 rounded-l-lg outline-none border-neutral-600 border-[1px] border-r-0"
     >
       HEX
     </p>
@@ -19,7 +19,7 @@
       type="text"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="font-mono bg-neutral-800 rounded-r-lg w-[150px] outline-none text-center py-2 border-neutral-700 border-2 border-l-0"
+      class="font-mono bg-neutral-800 rounded-r-lg w-[150px] outline-none text-center py-2 border-neutral-600 border-[1px] border-l-0"
       placeholder="#FFFFFF"
     />
   </div>

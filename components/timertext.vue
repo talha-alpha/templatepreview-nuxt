@@ -5,7 +5,7 @@
     <h2 class="text-lg font-bold mb-6">Edit Timer Text settings</h2>
 
     <div class="flex-col mb-2 overflow-hidden">
-      <ModulesLabel class="flex overflow-hidden font-bold"></ModulesLabel>
+      <ModulesLabel class="flex overflow-hidden font-semibold"></ModulesLabel>
       <ModulesTextAreaInput
         :modelValue="localSettings.text"
         @update:modelValue="handleTextUpdate"
@@ -14,7 +14,7 @@
     </div>
 
     <div class="flex-col mb-4 overflow-hidden">
-      <ModulesLabel class="flex overflow-hidden font-bold mb-1"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Align</ModulesLabel
       >
       <ModulesAlignmentSelector
@@ -25,7 +25,7 @@
     </div>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Font Family</ModulesLabel
       >
       <ModulesSelectInput
@@ -36,7 +36,7 @@
     </div>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Font Weight</ModulesLabel
       >
       <ModulesSelectInput
@@ -47,7 +47,7 @@
     </div>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Font Size</ModulesLabel
       >
       <ModulesNumberInput
@@ -59,7 +59,7 @@
     </div>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1"
         >Font Color</ModulesLabel
       >
       <ModulesColorPicker
@@ -70,12 +70,12 @@
 
     <div class="mb-4">
       <div class="flex justify-between">
-        <ModulesLabel class="flex overflow-hidden font-bold"
+        <ModulesLabel class="flex overflow-hidden font-semibold"
           >BG Color</ModulesLabel
         >
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-medium"
           @click="updateSetting('bgColor', 'transparent')"
         >
           Remove
@@ -88,7 +88,7 @@
     </div>
 
     <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold"></ModulesLabel>
+      <ModulesLabel class="flex overflow-hidden font-semibold"></ModulesLabel>
       <ModulesPaddingControl
         :padding="localSettings.padding"
         @update:padding="(v) => updateSetting('padding', v)"
@@ -96,7 +96,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-semibold rounded-lg text-center"
       @click="updateSettings"
     >
       Update Settings
@@ -172,5 +172,5 @@ const alignmentOptions = [
 ];
 
 const fontOptions = ["Arial", "Cambria", "Courier New", "Cursive", "Fantasy"];
-const fontWeight = ["Normal", "Bold"];
+const fontWeight = ["Normal", "semiBold"];
 </script>

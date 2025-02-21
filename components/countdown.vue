@@ -2,10 +2,10 @@
   <div
     class="flex flex-col min-h-[700px] min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] lg:p-2 rounded-xl bg-background text-sm mr-4"
   >
-    <h2 class="text-lg font-bold mb-4">Set Duration</h2>
+    <h2 class="text-lg font-semibold mb-4">Set Duration</h2>
 
     <div>
-      <ModulesLabel class="flex overflow-hidden font-bold mb-2">
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
         Duration (Minutes)
       </ModulesLabel>
       <ModulesNumberInput
@@ -16,13 +16,13 @@
         placeholder="Max 30"
         class="w-full text-white rounded-lg outline-none"
       />
-      <p class="mb-8 mt-1 text-sm justify-start">Max 30 minutes</p>
+      <p class="mb-6 mt-1 text-xs justify-start">Max 30 minutes</p>
     </div>
 
-    <h2 class="text-lg font-bold mb-2">Edit Settings</h2>
+    <h2 class="text-lg font-bold mb-4">Edit Settings</h2>
 
-    <div class="mb-4">
-      <ModulesLabel class="flex overflow-hidden font-bold">
+    <div class="mb-6">
+      <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
         Choose Element To Adjust
       </ModulesLabel>
       <ModulesSelectInput
@@ -33,9 +33,9 @@
     </div>
 
     <div v-if="localSettings.selectedElement === 'Period Settings'">
-      <h3 class="text-lg font-bold mb-4">Period Settings</h3>
+      <h3 class="text-lg font-semibold mb-2">Period Settings</h3>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Period Font Family
         </ModulesLabel>
         <ModulesSelectInput
@@ -46,7 +46,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Period Font Weight
         </ModulesLabel>
         <ModulesSelectInput
@@ -57,7 +57,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Period Font Size
         </ModulesLabel>
         <ModulesNumberInput
@@ -69,7 +69,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Period Font Color
         </ModulesLabel>
         <ModulesColorPicker
@@ -79,10 +79,12 @@
       </div>
       <div class="mb-4">
         <div class="flex overflow-hidden justify-between">
-          <label class="flex overflow-hidden font-bold"> BG Color </label>
+          <label class="flex overflow-hidden font-semibold mb-1">
+            BG Color
+          </label>
           <ModulesButton
             variant="ghost"
-            class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
+            class="text-destructive hover:text-destructive cursor-pointer text-red-500 hover:text-red-400 font-medium"
             @click="resetBgColor"
           >
             Remove
@@ -96,9 +98,9 @@
     </div>
 
     <div v-else-if="localSettings.selectedElement === 'Timer Settings'">
-      <h3 class="text-lg font-bold mb-4">Timer Settings</h3>
+      <h3 class="text-lg font-semibold mb-2">Timer Settings</h3>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Timer Font Family
         </ModulesLabel>
         <ModulesSelectInput
@@ -109,7 +111,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Timer Font Weight
         </ModulesLabel>
         <ModulesSelectInput
@@ -120,7 +122,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Timer Font Size
         </ModulesLabel>
         <ModulesNumberInput
@@ -132,7 +134,7 @@
         />
       </div>
       <div class="mb-4">
-        <ModulesLabel class="flex overflow-hidden font-bold">
+        <ModulesLabel class="flex overflow-hidden font-semibold mb-1">
           Timer Font Color
         </ModulesLabel>
         <ModulesColorPicker
@@ -142,10 +144,12 @@
       </div>
       <div class="mb-4">
         <div class="flex justify-between">
-          <label class="flex overflow-hidden font-bold"> BG Color </label>
+          <label class="flex overflow-hidden font-semibold mb-1">
+            BG Color
+          </label>
           <ModulesButton
             variant="ghost"
-            class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
+            class="text-destructive hover:text-destructive cursor-pointer text-red-500 hover:text-red-400 font-medium"
             @click="resetBgColor"
           >
             Remove
@@ -159,7 +163,7 @@
     </div>
 
     <ModulesButton
-      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-bold rounded-lg text-center"
+      class="w-full bg-blue-500 hover:bg-blue-400 text-white p-2 font-semibold rounded-lg text-center"
       @click="emitUpdate"
     >
       Update Settings

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <label class="flex overflow-hidden font-bold mb-1">{{ label }}</label>
+    <label class="flex overflow-hidden font-semibold mb-1">{{ label }}</label>
     <div class="relative">
       <select
         v-model="selected"
-        class="w-full appearance-none rounded-lg bg-neutral-800 p-3 pr-10 outline-none border-neutral-700 border-2"
+        class="w-full appearance-none rounded-lg bg-neutral-800 p-3 pr-10 outline-none border-neutral-600 border-[1px]"
       >
         <option v-for="option in options" :key="option" :value="option">
           {{ option }}

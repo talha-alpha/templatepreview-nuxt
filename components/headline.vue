@@ -45,7 +45,9 @@
     />
 
     <div class="mb-4">
-      <label class="flex items-center gap-2 w-full">Font Color</label>
+      <label class="flex items-center gap-2 w-full font-semibold mb-1"
+        >Font Color</label
+      >
       <ModulesColorPicker
         :modelValue="localSettings.fontColor"
         @update:modelValue="(v) => updateSetting('fontColor', v)"
@@ -54,10 +56,12 @@
 
     <div class="mb-4">
       <div class="flex justify-between">
-        <label class="flex items-center gap-2 w-full">BG Color</label>
+        <label class="flex items-center gap-2 w-full font-semibold mb-1"
+          >BG Color</label
+        >
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 hover:text-red-400 font-medium"
           @click="updateSetting('bgColor', 'transparent')"
         >
           Remove

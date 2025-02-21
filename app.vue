@@ -1,18 +1,18 @@
 <template>
   <div
-    class="xl:w-full lg:w-full xl:h-screen h-screen text-white flex overflow-hidden mx-auto bg-neutral-900 border-black border-2"
+    class="xl:w-full lg:w-full xl:h-screen h-screen text-white flex overflow-hidden mx-auto bg-neutral-900"
   >
     <div
       class="flex-col overflow-hidden xl:min-w-[80%] lg:min-w-[80%] max-h-screen justify-start bg-neutral-800 m-6 rounded-xl"
     >
       <strong
-        class="text-gray-200 flex font-extrabold p-4 border-b-2 border-zinc-600 self-center"
+        class="text-gray-200 flex font-extrabold p-4 border-b-2 border-neutral-700 self-center"
       >
         Template Preview
       </strong>
 
       <div
-        class="relative xl:min-h-[750px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
+        class="relative xl:min-h-[790px] rounded-xl bg-zinc-950 m-6 overflow-hidden"
         :style="
           componentVisibility['Background']
             ? {
@@ -209,7 +209,7 @@
           <p
             v-for="comp in activeComponents"
             :key="comp"
-            class="flex overflow-hidden text-white border-b-2 border-zinc-600 py-4 font-bold cursor-pointer justify-between hover:text-stone-400 duration-300 rounded-lg rounded-b-none"
+            class="flex overflow-hidden text-white border-b-[1px] border-neutral-700 py-4 font-bold cursor-pointer justify-between hover:text-stone-400 duration-300 rounded-lg rounded-b-none"
             @click="toggleSettings(comp)"
           >
             {{ comp }}

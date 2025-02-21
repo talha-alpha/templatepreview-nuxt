@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label class="flex overflow-hidden font-bold mb-1">Padding</label>
+    <label class="flex overflow-hidden font-semibold mb-1">Padding</label>
     <div class="grid grid-cols-2 gap-2">
       <div
         v-for="side in sides"
         :key="side.key"
-        class="flex gap-2 items-center bg-neutral-800 justify-between rounded-lg border-neutral-700 border-2"
+        class="flex gap-2 items-center bg-neutral-800 justify-between rounded-lg border-neutral-600 border-[1px]"
       >
         <label class="p-2 text-center text-sm w-[50%]">{{ side.label }}</label>
         <input

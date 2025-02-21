@@ -3,10 +3,10 @@
     class="flex flex-col xl:min-h-[700px] xl:min-w-[300px] p-2 lg:min-h-[700px] lg:min-w-[220px] rounded-xl bg-background text-sm mb-2 mr-4 mt-4"
   >
     <h4 class="text-lg font-bold mb-6">Background Type</h4>
-    <div class="relative mb-2">
+    <div class="relative mb-6">
       <select
         v-model="backgroundType"
-        class="w-full appearance-none rounded-lg bg-neutral-800 p-3 pr-10 outline-none border-neutral-600 border-2"
+        class="w-full appearance-none rounded-lg bg-neutral-800 p-3 pr-10 outline-none border-neutral-600 border-[1px]"
       >
         <option value="color">Color</option>
         <option value="image">Image</option>
@@ -28,14 +28,14 @@
       </svg>
     </div>
 
-    <div v-if="backgroundType === 'color'" class="mb-4">
+    <div v-if="backgroundType === 'color'" class="mb-6">
       <div class="flex justify-between">
         <ModulesLabel class="flex overflow-hidden font-bold mb-2"
           >BG Color</ModulesLabel
         >
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 hover:text-red-400 font-medium"
           @click="handleColorChange('bgColor', 'transparent')"
         >
           Remove
@@ -47,14 +47,14 @@
       />
     </div>
 
-    <div v-if="backgroundType === 'image'" class="relative mb-4">
+    <div v-if="backgroundType === 'image'" class="relative mb-6">
       <ModulesLabel class="flex overflow-hidden font-bold mb-2"
         >Background Image</ModulesLabel
       >
       <div class="flex flex-col gap-2">
         <select
           v-model="selectedImage"
-          class="w-full bg-neutral-800 p-2 rounded-lg outline-none border-neutral-600 border-2 mb-2"
+          class="w-full bg-neutral-800 p-2 rounded-lg outline-none border-neutral-600 border-[1px]"
         >
           <option value="">Select an image</option>
           <option
@@ -85,7 +85,7 @@
           v-if="selectedImage"
           :src="selectedImage"
           alt="Selected Background"
-          class="w-full h-32 object-cover rounded-lg border-neutral-600 border-2 mb-2"
+          class="w-full h-32 object-cover rounded-lg border-neutral-600 border-[1px] mb-2"
         />
       </div>
     </div>

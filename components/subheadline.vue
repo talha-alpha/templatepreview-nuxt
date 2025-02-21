@@ -43,16 +43,16 @@
     />
 
     <div class="mb-4">
-      <label class="flex overflow-hidden font-bold">Font Color</label>
+      <label class="flex overflow-hidden font-semibold mb-1">Font Color</label>
       <ModulesColorPicker v-model="localSettings.fontColor" />
     </div>
 
     <div class="mb-4">
       <div class="flex justify-between">
-        <label class="flex overflow-hidden font-bold">BG Color</label>
+        <label class="flex overflow-hidden font-semibold mb-1">BG Color</label>
         <ModulesButton
           variant="ghost"
-          class="text-destructive hover:text-destructive cursor-pointer text-red-500 font-semibold"
+          class="text-destructive hover:text-destructive cursor-pointer text-red-500 hover:text-red-400 font-medium"
           @click="resetBgColor"
         >
           Remove
